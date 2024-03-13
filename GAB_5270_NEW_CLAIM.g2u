@@ -1,0 +1,1092 @@
+﻿Program.Sub.ScreenSU.Start
+Gui.frmNewClaim..Create(BaseForm)
+Gui.frmNewClaim..Caption("New Claim")
+Gui.frmNewClaim..Size(15045,12195)
+Gui.frmNewClaim..MinX(0)
+Gui.frmNewClaim..MinY(0)
+Gui.frmNewClaim..Position(0,0)
+Gui.frmNewClaim..BackColor(-2147483633)
+Gui.frmNewClaim..MousePointer(0)
+Gui.frmNewClaim..Event(UnLoad,frmNewClaim_UnLoad)
+Gui.frmNewClaim..AlwaysOnTop(False)
+Gui.frmNewClaim..FontName("Tahoma")
+Gui.frmNewClaim..FontSize(8.25)
+Gui.frmNewClaim..ControlBox(True)
+Gui.frmNewClaim..MaxButton(True)
+Gui.frmNewClaim..MinButton(True)
+Gui.frmNewClaim..Moveable(True)
+Gui.frmNewClaim..Sizeable(True)
+Gui.frmNewClaim..ShowInTaskBar(True)
+Gui.frmNewClaim..TitleBar(True)
+Gui.frmNewClaim.gsgcNewClaim.Create(GsGridControl)
+Gui.frmNewClaim.gsgcNewClaim.Size(14880,7650)
+Gui.frmNewClaim.gsgcNewClaim.Position(60,1815)
+Gui.frmNewClaim.gsgcNewClaim.Event(CellValueChanged,gsgcNewClaim_CellValueChanged)
+Gui.frmNewClaim.gsgcNewClaim.Enabled(True)
+Gui.frmNewClaim.gsgcNewClaim.Visible(True)
+Gui.frmNewClaim.gsgcNewClaim.Zorder(0)
+Gui.frmNewClaim.picGSSLogo.Create(PictureBox)
+Gui.frmNewClaim.picGSSLogo.Size(4125,960)
+Gui.frmNewClaim.picGSSLogo.Position(5145,45)
+Gui.frmNewClaim.picGSSLogo.Enabled(True)
+Gui.frmNewClaim.picGSSLogo.Visible(True)
+Gui.frmNewClaim.picGSSLogo.Zorder(0)
+Gui.frmNewClaim.cmdSave.Create(Button)
+Gui.frmNewClaim.cmdSave.Size(1440,375)
+Gui.frmNewClaim.cmdSave.Position(13410,75)
+Gui.frmNewClaim.cmdSave.Caption("Save Claim")
+Gui.frmNewClaim.cmdSave.Event(Click,cmdSave_Click)
+Gui.frmNewClaim.cmdSave.Enabled(True)
+Gui.frmNewClaim.cmdSave.Visible(True)
+Gui.frmNewClaim.cmdSave.Zorder(0)
+Gui.frmNewClaim.cmdSave.FontName("Tahoma")
+Gui.frmNewClaim.cmdSave.FontSize(8.25)
+Gui.frmNewClaim.cmdPrint.Create(Button)
+Gui.frmNewClaim.cmdPrint.Size(1440,375)
+Gui.frmNewClaim.cmdPrint.Position(13410,525)
+Gui.frmNewClaim.cmdPrint.Caption("Print Claim")
+Gui.frmNewClaim.cmdPrint.Event(Click,cmdPrint_Click)
+Gui.frmNewClaim.cmdPrint.Enabled(True)
+Gui.frmNewClaim.cmdPrint.Visible(True)
+Gui.frmNewClaim.cmdPrint.Zorder(0)
+Gui.frmNewClaim.cmdPrint.FontName("Tahoma")
+Gui.frmNewClaim.cmdPrint.FontSize(8.25)
+Gui.frmNewClaim.cmdEmail.Create(Button)
+Gui.frmNewClaim.cmdEmail.Size(1440,375)
+Gui.frmNewClaim.cmdEmail.Position(13410,975)
+Gui.frmNewClaim.cmdEmail.Caption("Email Claim")
+Gui.frmNewClaim.cmdEmail.Event(Click,cmdEmail_Click)
+Gui.frmNewClaim.cmdEmail.Enabled(True)
+Gui.frmNewClaim.cmdEmail.Visible(True)
+Gui.frmNewClaim.cmdEmail.Zorder(0)
+Gui.frmNewClaim.cmdEmail.FontName("Tahoma")
+Gui.frmNewClaim.cmdEmail.FontSize(8.25)
+Gui.frmNewClaim.lbl1.Create(Label,"New Claim No.",True,1245,255,0,90,150,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lbl1.BorderStyle(0)
+Gui.frmNewClaim.lblCalcRetn.Create(Label,"Retention:",True,1125,255,0,11655,10320,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblCalcRetn.BorderStyle(0)
+Gui.frmNewClaim.txtTotalClaim.Create(TextBox,"",True,2055,300,0,12840,9525,False,1,"Arial",8,-2147483643,1)
+Gui.frmNewClaim.txtTotalClaim.NumericOnly(1)
+Gui.frmNewClaim.lblTotalClaim.Create(Label,"Total Claim:",True,1275,255,0,11550,9615,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblTotalClaim.BorderStyle(0)
+Gui.frmNewClaim.lblTotalGross.Create(Label,"Total Gross:",True,1335,255,0,11490,10710,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblTotalGross.BorderStyle(0)
+Gui.frmNewClaim.txtTotalGross.Create(TextBox,"",True,2055,300,0,12825,10605,False,1,"Arial",8,-2147483643,1)
+Gui.frmNewClaim.txtTotalGross.NumericOnly(1)
+Gui.frmNewClaim.txtTotalGross.Mask("###,###,###.00")
+Gui.frmNewClaim.lblNextClaim.Create(Label,"",True,1935,255,0,1890,150,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblNextClaim.BorderStyle(0)
+Gui.frmNewClaim.cmdRetention.Create(Button)
+Gui.frmNewClaim.cmdRetention.Size(2100,375)
+Gui.frmNewClaim.cmdRetention.Position(12810,9840)
+Gui.frmNewClaim.cmdRetention.Caption("Retention Calc.")
+Gui.frmNewClaim.cmdRetention.Event(Click,cmdRetention_Click)
+Gui.frmNewClaim.cmdRetention.Enabled(False)
+Gui.frmNewClaim.cmdRetention.Visible(True)
+Gui.frmNewClaim.cmdRetention.Zorder(0)
+Gui.frmNewClaim.cmdRetention.FontName("Tahoma")
+Gui.frmNewClaim.cmdRetention.FontSize(8.25)
+Gui.frmNewClaim.txtRetention.Create(TextBox,"",True,2055,300,0,12825,10245,True,1,"Arial",8,-2147483643,1)
+Gui.frmNewClaim.txtRetention.NumericOnly(1)
+Gui.frmNewClaim.txtRetention.Event(LostFocus,txtRetention_LostFocus)
+Gui.frmNewClaim.cmdCreateInv.Create(Button)
+Gui.frmNewClaim.cmdCreateInv.Size(2055,375)
+Gui.frmNewClaim.cmdCreateInv.Position(12810,10950)
+Gui.frmNewClaim.cmdCreateInv.Caption("Create Invoice")
+Gui.frmNewClaim.cmdCreateInv.Event(Click,cmdCreateInv_Click)
+Gui.frmNewClaim.cmdCreateInv.Enabled(True)
+Gui.frmNewClaim.cmdCreateInv.Visible(True)
+Gui.frmNewClaim.cmdCreateInv.Zorder(0)
+Gui.frmNewClaim.cmdCreateInv.FontName("Tahoma")
+Gui.frmNewClaim.cmdCreateInv.FontSize(8.25)
+Gui.frmNewClaim.cmdDelete.Create(Button)
+Gui.frmNewClaim.cmdDelete.Size(1440,375)
+Gui.frmNewClaim.cmdDelete.Position(13410,1380)
+Gui.frmNewClaim.cmdDelete.Caption("Delete Claim")
+Gui.frmNewClaim.cmdDelete.Event(Click,cmdDelete_Click)
+Gui.frmNewClaim.cmdDelete.Enabled(True)
+Gui.frmNewClaim.cmdDelete.Visible(True)
+Gui.frmNewClaim.cmdDelete.Zorder(0)
+Gui.frmNewClaim.cmdDelete.FontName("Tahoma")
+Gui.frmNewClaim.cmdDelete.FontSize(8.25)
+Gui.frmNewClaim.lblCurPrevClaim.Create(Label,"Current + Previous Claims:",True,1905,210,0,60,9690,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblCurPrevClaim.BorderStyle(0)
+Gui.frmNewClaim.txtCurPrevClaim.Create(TextBox,"",True,1980,300,0,2145,9615,True,0,"Arial",8,-2147483643,1)
+Gui.frmNewClaim.lblHistClaim.Create(Label,"",False,1935,255,0,135,10095,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblHistClaim.BorderStyle(0)
+Gui.frmNewClaim.txtSO.Create(TextBox,"",False,1665,300,0,10440,11400,True,0,"Tahoma",8.25,,1)
+Gui.frmNewClaim.cmdBrowseSO.Create(Button)
+Gui.frmNewClaim.cmdBrowseSO.Enabled(True)
+Gui.frmNewClaim.cmdBrowseSO.Visible(True)
+Gui.frmNewClaim.cmdBrowseSO.Zorder(0)
+Gui.frmNewClaim.cmdBrowseSO.Size(480,375)
+Gui.frmNewClaim.cmdBrowseSO.Position(8610,9570)
+Gui.frmNewClaim.cmdBrowseSO.Caption("^")
+Gui.frmNewClaim.cmdBrowseSO.FontName("Tahoma")
+Gui.frmNewClaim.cmdBrowseSO.FontSize(8.25)
+Gui.frmNewClaim.cmdBrowseSO.Event(Click,cmdBrowseSO_Click)
+Gui.frmNewClaim.lblSalesOrder.Create(Label,"Sales Order:",True,900,195,0,6105,9675,True,0,"Tahoma",8.25,,0,0)
+Gui.frmNewClaim.lblSalesOrder.BorderStyle(0)
+Gui.frmNewClaim.txtSalesOrder.Create(TextBox,"",True,1500,300,0,7020,9615,True,0,"Tahoma",8.25,,1)
+Gui.frmNewClaim.cmdProgress.Create(Button)
+Gui.frmNewClaim.cmdProgress.Enabled(True)
+Gui.frmNewClaim.cmdProgress.Visible(True)
+Gui.frmNewClaim.cmdProgress.Zorder(0)
+Gui.frmNewClaim.cmdProgress.Size(2055,375)
+Gui.frmNewClaim.cmdProgress.Position(9150,9570)
+Gui.frmNewClaim.cmdProgress.Caption("Create Progress Bill")
+Gui.frmNewClaim.cmdProgress.FontName("Tahoma")
+Gui.frmNewClaim.cmdProgress.FontSize(8.25)
+Gui.frmNewClaim.cmdProgress.Event(Click,cmdProgress_Click)
+Gui.frmNewClaim.lblCustomer.Create(Label,"",True,15,210,0,600,930,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmNewClaim.lblCustomer.BorderStyle(0)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+v.Global.sProjectNumber.Declare(string)
+v.Global.sSQLMap.Declare(string)
+V.Global.sClient.Declare(string)
+f.Intrinsic.Control.If(v.Caller.Hook,=,"40403")
+	v.Global.sProjectNumber.Set(v.Passed.000002)
+	v.Global.sClient.Set(v.Passed.000023)
+f.Intrinsic.Control.EndIf
+Program.External.Include.Library("GAB_5270_Library.lib")
+Program.Sub.Preflight.End
+Program.Sub.Main.Start
+F.ODBC.Connection!CON.OPENCOMPANYCONNECTION
+v.Local.sIcon.Declare(string)
+v.Local.sGetProject.Declare(string)
+v.Local.sGetClaim.Declare(string)
+v.Local.sGssLogo.Declare(string)
+v.Local.ssql.Declare(string)
+v.Local.sret.Declare(string)
+v.Local.sTot.Declare(string)
+v.Local.sGrs.Declare(string)
+v.Local.fret.Declare(float)
+v.Local.fTot.Declare(float)
+v.Local.fGrs.Declare(float)
+
+'Set passed variables
+v.Local.sGetProject.Set(v.Passed.Project)
+v.Local.sGetClaim.Set(v.Passed.ClaimNo)
+F.Intrinsic.Control.If(V.Global.sClient.Trim,=,"")
+	f.Intrinsic.String.Build("SELECT CUSTOMER FROM V_PROJECT_MASTER WHERE PROJECT='{0}'",v.Local.sGetProject.Trim,v.Local.ssql)
+	F.ODBC.Connection!CON.EXECUTEANDRETURN(V.Local.ssql,v.Global.sClient)
+	gui.frmNewClaim.lblCustomer.Caption(v.Global.sClient)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.String.Build("{0}\ART\gss2.ico",V.Caller.GlobalDir,v.Local.sIcon)		
+F.Intrinsic.String.Build("{0}\ART\GAB_GSS_Logo_Green_Dash.png",V.Caller.GlobalDir,V.Local.sGssLogo)
+Gui.frmNewClaim..Icon(V.Local.sIcon)
+Gui.frmNewClaim.picGSSLogo.Picture(V.Local.sGssLogo)
+gui.frmNewClaim.picGSSLogo.anchor(1)
+
+'Set Anchors
+gui.frmNewClaim.gsgcNewClaim.anchor(15)
+gui.frmNewClaim.cmdPrint.anchor(9)
+gui.frmNewClaim.cmdRetention.anchor(9)
+gui.frmNewClaim.cmdSave.anchor(9)
+gui.frmNewClaim.cmdEmail.anchor(9)
+gui.frmNewClaim.cmdDelete.anchor(9)
+gui.frmNewClaim.lblSalesOrder.Anchor(10)
+gui.frmNewClaim.cmdProgress.Anchor(10)
+gui.frmNewClaim.txtSalesOrder.Anchor(10)
+gui.frmNewClaim.cmdBrowseSO.Anchor(10)
+GUI.frmNewClaim.txtRetention.anchor(10)
+gui.frmNewClaim.cmdCreateInv.anchor(10)
+gui.frmNewClaim.txtTotalGross.anchor(10)
+gui.frmNewClaim.cmdRetention.anchor(10)
+gui.frmNewClaim.txtTotalClaim.anchor(10)
+gui.frmNewClaim.lblTotalClaim.anchor(10)
+gui.frmNewClaim.lblTotalGross.anchor(10)
+gui.frmNewClaim.lblCalcRetn.anchor(10)
+gui.frmNewClaim.txtCurPrevClaim.Anchor(10)
+gui.frmNewClaim.lblCurPrevClaim.Anchor(10)
+
+'Create a new Claim
+f.Intrinsic.Control.If(v.Local.sGetProject.Trim,=,"")
+	'Set next claim number
+	f.Intrinsic.String.Build("SELECT DISTINCT MAX(CLAIMNO) FROM GAB_5270_CLAIML WHERE PROJECT='{0}'",v.Global.sProjectNumber.Trim,v.Local.ssql)
+	f.ODBC.connection!con.executeandreturn(v.Local.ssql,v.local.fret)
+	f.Intrinsic.Math.Add(v.Local.fret,1,v.Local.fret)
+	gui.frmNewClaim.lblNextClaim.Caption(v.Local.fret)	
+	'Create the template for a new claim
+	f.Intrinsic.Control.CallSub(generateNewClaim)
+	'Grab History
+	f.Intrinsic.Control.CallSub(grabHistory)
+f.Intrinsic.Control.Else
+	'Grab Existing
+	v.Global.sProjectNumber.Set(v.Local.sGetProject)
+	gui.frmNewClaim.lblNextClaim.Caption(v.Local.sGetClaim)
+	f.Intrinsic.String.Build("SELECT PROJECT, PHASE, POSITION, SCHEDULE_CODE, SITE_INSTRUCTION, DESCRIPTION, PL, SCHEDULE_RATE, '0' as 'HistAmt', VALUE_CLAIM as 'ClaimVal',CLAIMNO,PREVCALCNOTE FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND CLAIMNO='{1}' AND SCHEDULE_CODE<>'RETENTION' ORDER BY POSITION",v.Local.sGetProject.Trim,v.Local.sGetClaim.Trim,v.Local.ssql)
+	f.Data.DataTable.CreateFromSQL("dtNC","con",v.Local.ssql,true)
+	f.Intrinsic.String.Build("SELECT DISTINCT CLIENT FROM GAB_5270_CLAIMH WHERE PROJECT='{0}' AND CLAIMNO='{1}'",v.Local.sGetProject.Trim,v.Local.sGetClaim.Trim,v.Local.ssql)
+	F.ODBC.Connection!con.executeandreturn(v.Local.ssql,V.Global.sClient)
+	f.Intrinsic.String.Build("SELECT IFNULL(SUM(VALUE_CLAIM)*-1,0) FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND CLAIMNO='{1}' AND SCHEDULE_CODE='RETENTION'",v.Local.sGetProject.Trim,v.Local.sGetClaim.Trim,v.Local.ssql)
+	F.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.fret)
+	f.Intrinsic.String.Build("SELECT IFNULL(SUM(VALUE_CLAIM),0) FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND CLAIMNO='{1}' AND SCHEDULE_CODE<>'RETENTION'",v.Local.sGetProject.Trim,v.Local.sGetClaim.Trim,v.Local.ssql)
+	F.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.fTot)
+	f.Intrinsic.Math.Sub(v.Local.fTot,v.Local.fret,v.Local.fGrs)
+	
+	F.Intrinsic.String.Format(V.Local.fTot,"###,###,###.00",V.Local.sTot)
+	F.Intrinsic.String.Format(V.Local.fret,"###,###,###.00",V.Local.sRet)
+	F.Intrinsic.String.Format(V.Local.fGrs,"###,###,###.00",V.Local.sGrs)
+	gui.frmNewClaim.txtTotalClaim.Text(v.Local.sTot)
+	gui.frmNewClaim.txtRetention.Text(v.Local.sRet)
+	gui.frmNewClaim.txtTotalGross.Text(v.Local.sGrs)
+	f.Intrinsic.Control.CallSub(grabHistory)
+f.Intrinsic.Control.EndIf
+f.Data.DataTable.AddColumn("dtNC","ClaimAll","Boolean")
+'Bind & set the properties
+gui.frmNewClaim.gsgcNewClaim.DataSource("dtNC")
+gui.frmNewClaim.gsgcNewClaim.AddGridviewFromDatatable("gvNC","dtNC")
+f.Intrinsic.Control.CallSub(setColumnProperties)
+gui.frmNewClaim..Show
+Program.Sub.Main.End
+
+Program.Sub.grabHistory.Start
+v.Local.i.Declare(long)
+v.Local.sSql.Declare(string)
+v.Local.fRet.Declare(Float)
+v.Local.fTtl.Declare(Float)
+
+f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dtNC.RowCount--,1)
+	f.Intrinsic.String.Build("SELECT SUM(VALUE_CLAIM) as 'TotalClaim' FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND PHASE='{1}' and CLAIMNO<{2}",v.Global.sProjectNumber,v.DataTable.dtNC(v.Local.i).PHASE!FIELDVALTRIM,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+	f.ODBC.Connection!con.executeandreturn(v.local.ssql,v.Local.fret)
+	f.Data.DataTable.setvalue("dtNC",v.Local.i,"HistAmt",v.Local.fret)
+	f.Intrinsic.Math.Add(v.Local.fTtl,v.Local.fRet,v.Local.fTtl)
+	gui.frmNewClaim.lblHistClaim.Caption(v.Local.fTtl)
+f.Intrinsic.Control.Next(v.Local.i)
+v.Local.fTtl.Set(0)
+Program.Sub.grabHistory.End
+
+Program.Sub.generateNewClaim.Start
+f.Intrinsic.Control.Try
+	v.Local.ssql.Declare
+	'Try the custom table first
+	f.Intrinsic.String.Build("SELECT PROJECT, Position, SCHEDULE_CODE, SITE_INSTRUCTION, DESCRIPTION, SCHEDULE_RATE, PL, ID as 'Phase' FROM GAB_5270_TABLE_SETUP WHERE PROJECT='{0}' ORDER BY Position, ID",v.Global.sProjectNumber,V.Local.ssql)
+	f.Data.DataTable.CreateFromSQL("dtNC","con",v.Local.ssql,true)
+	f.Intrinsic.Control.If(v.Datatable.dtNC.RowCount,=,0)
+		'Try project table second for legacy purposes
+		f.Intrinsic.String.Build("SELECT PROJECT, PHASE, POS as 'Position', rtrim(USER_1) as 'SCHEDULE_CODE', rtrim(USER_2) as 'SITE_INSTRUCTION', rtrim(DESCR) as 'DESCRIPTION', CAST(USER_3 as double) as 'SCHEDULE_RATE', RTRIM(USER_4) AS 'PL' FROM V_PROJECT_PHASE WHERE PROJECT='{0}' AND PHASE<>'SALE' AND PHASE<>'RETN' ORDER BY POS",v.Global.sProjectNumber,V.Local.ssql)
+		F.Data.DataTable.CreateFromSQL("dtNC","con",v.Local.ssql,true)
+	f.Intrinsic.Control.EndIf
+	f.Data.DataTable.AddColumn("dtNC","HistAmt","Float")
+	f.Data.DataTable.AddColumn("dtNC","ClaimVal","Float")
+	f.Data.DataTable.AddColumn("dtNC","CLAIMNO","Float")
+	f.Data.DataTable.AddColumn("dtNC","PREVCALCNOTE","Float")	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.ODBC.Connection!con.Close
+	f.Intrinsic.Control.End
+f.Intrinsic.Control.EndTry
+Program.Sub.generateNewClaim.End
+
+Program.Sub.addPB.Start
+f.Intrinsic.Control.Try
+	v.Local.sCustomer.Declare
+	v.Local.sSO.Declare
+	v.Local.sTemp.Declare
+	v.Local.sGSSPart.Declare
+	v.Local.sRet.Declare
+	v.Local.sPL.Declare
+	v.Local.sDescConcat.Declare
+	v.Local.sText.Declare
+	v.Local.sLineCSV.Declare
+	v.Local.fQty.Declare
+	v.Local.sUser1.Declare
+	v.Local.sUser2.Declare
+	v.Local.sUser3.Declare
+	v.Local.sUser4.Declare
+	v.Local.sUser5.Declare
+	v.Local.sUM.Declare
+	v.Local.sTempFull.Declare
+	v.Local.fPrice.Declare
+	v.Local.sClaim.Declare
+	V.local.sFileName.Declare
+	v.Local.sPath.Declare
+	v.Local.bExists.Declare
+	V.Local.sError.Declare
+	V.Local.sParam.Declare
+	
+	v.Local.sCustomer.Set(v.Screen.frmNewClaim!lblCustomer.Caption)
+	v.Local.sSO.Set(v.Screen.frmNewClaim!txtSalesOrder.Text)
+	v.Local.sGSSPart.Set("PROGRESS")
+	f.Intrinsic.String.Concat("Claim ",v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.sDescConcat)
+	v.Local.fQty.Set(1)
+	v.Local.fPrice.Set(v.Screen.frmNewClaim!txtTotalGross.Text)
+	v.Local.sPL.Set("  ")
+	v.Local.sUM.Set("EA")
+	
+	'"O" for Order,Customer, Order #
+	F.Intrinsic.String.Concat("O",V.Local.sCustomer,V.Local.sSO,"       ",V.Local.sTemp)
+	F.Intrinsic.String.RPad(v.Local.sGSSPart," ",38,V.Local.sRet)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sRet,V.Local.sTemp)
+	F.Intrinsic.String.RPad(V.Local.sTemp," ",55,V.Local.sTemp)
+	
+	'product line
+	F.Intrinsic.String.Concat(V.Local.sTemp,v.Local.sPL,"   ",V.Local.sTemp)
+	
+	'description
+	F.Intrinsic.String.RPad(V.Local.sDescConcat," ",30,V.Local.sText)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sText,V.Local.sTemp)
+		
+	'line number 001-999
+	f.Intrinsic.String.LPad(v.Screen.frmNewClaim!lblNextClaim.Caption,"0",2,v.Local.sClaim)
+	f.Intrinsic.String.Concat("8",v.Local.sClaim,v.Local.sLineCSV)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sLineCSV,"P",V.Local.sTemp)
+	F.Intrinsic.Control.CallSub(ProjectSOLineMap,"SOH",v.Local.sSO,"Desc",v.Local.sDescConcat,"Phas","SALE")
+	
+	'quantity
+	F.Intrinsic.String.Format(V.local.fQty,"000000000.0000",V.Local.sRet)
+	F.Intrinsic.String.Replace(V.Local.sRet,".","",V.Local.sRet)
+	F.Intrinsic.String.Replace(V.Local.sRet,"-","",V.Local.sRet)
+	F.Intrinsic.String.LPad(V.Local.sRet," ",13,V.Local.sRet)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sRet,V.Local.sTemp)
+	F.Intrinsic.String.RPad(V.Local.sTemp," ",117,V.Local.sTemp)
+	
+	'price
+	F.Intrinsic.Math.Round(V.Local.fPrice,6,V.Local.fPrice)
+	F.Intrinsic.String.Format(v.Local.fPrice,"##########.000000",v.Local.sRet)
+	F.Intrinsic.String.Replace(V.Local.sRet,".","",V.Local.sRet)
+	F.Intrinsic.String.LPad(V.Local.sRet,"0",16,V.Local.sRet)
+	
+	f.Intrinsic.String.Replace(v.Local.sRet,".","",v.Local.sRet)
+	F.Intrinsic.String.LPad(V.Local.sRet,"0",12,V.Local.sRet)
+	F.Intrinsic.String.RPad(V.Local.sRet,"0",16,V.Local.sRet)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sRet,V.Local.sTemp)
+	
+	'User Fields 1 - 5
+	f.Intrinsic.String.RPad(v.Local.sUser1," ",30,v.Local.sUser1)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sUser1,V.Local.sTemp)
+	f.Intrinsic.String.RPad(v.Local.sUser2," ",30,v.Local.sUser2)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sUser2,V.Local.sTemp)
+	f.Intrinsic.String.RPad(v.Local.sUser3," ",30,v.Local.sUser3)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sUser3,V.Local.sTemp)
+	f.Intrinsic.String.RPad(v.Local.sUser4," ",30,v.Local.sUser4)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sUser4,V.Local.sTemp)
+	f.Intrinsic.String.RPad(v.Local.sUser5," ",30,v.Local.sUser5)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sUser5,V.Local.sTemp)
+	F.Intrinsic.String.RPad(V.Local.sTemp," ",283,V.Local.sTemp)
+	
+	'UM
+	V.Local.sRet.Set(v.Local.sUM)
+	F.Intrinsic.String.RPad(V.Local.sUM," ",2,V.Local.sRet)
+	F.Intrinsic.String.Concat(V.Local.sTemp,V.Local.sRet,V.Local.sTemp)
+	F.Intrinsic.String.RPad(V.Local.sTemp," ",285,V.Local.sTemp)
+	
+	'add line to FullTemp String that will write to txt file
+	F.Intrinsic.String.Concat(V.local.sTempFull,V.local.sTemp,V.Ambient.NewLine,V.Local.sTempFull)
+	
+	'Order Upload
+	F.Intrinsic.String.Concat("SOLINESUPLOAD",V.Caller.Terminal,V.Caller.CompanyCode,V.local.sFileName)
+	F.Intrinsic.String.Concat(V.Caller.FilesDir,"\",V.local.sFileName,V.Local.sPath)
+	F.Intrinsic.File.Exists(V.Local.sPath,V.Local.bExists)
+	F.Intrinsic.Control.If(V.Local.bExists,=,True)
+		F.Intrinsic.File.DeleteFile(V.Local.sPath)
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.File.String2File(V.Local.sPath,V.Local.sTempFull)
+	
+	'Run the core program to upload the SO
+	F.Intrinsic.String.Concat(V.Caller.FilesDir,"\",V.local.sFileName,V.Local.sPath)
+	f.Intrinsic.String.ConcatCallWrapperArgs(v.Screen.frmNewClaim!txtSalesOrder.text,"O",v.Local.sPath,v.Local.sParam)
+	f.Global.General.CallWrapperSync("7020",v.Local.sParam)
+	
+	'Do one final cleanup, associate the phase with the SO line
+	f.Intrinsic.Control.CallSub(ProjectSOLineExec)
+	
+	f.Intrinsic.UI.msgbox("Progress Bill added to Sales Order.")
+	f.Intrinsic.Control.CallSub(frmNewClaim_Unload)
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(frmNewClaim_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.addPB.End
+
+Program.Sub.Upload.Start
+f.Intrinsic.Control.Try
+	
+	
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.ODBC.Connection!con.Close
+	f.Intrinsic.Control.End
+f.Intrinsic.Control.EndTry
+
+Program.Sub.Upload.End
+
+Program.Sub.ProjectSOLineMap.Start
+f.Intrinsic.Control.Try
+	v.Local.ssql.Declare
+	f.Intrinsic.String.Build("UPDATE ORDER_LINES SET PHASE='{0}' WHERE ORDER_NO='{1}' AND DESCRIPTION='{2}'",v.args.Phas,v.args.SOH,v.args.Desc.Trim,v.Local.ssql)
+	f.Intrinsic.String.Concat(v.Global.sSQLMap,v.Local.ssql,";",v.Global.sSQLMap)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(frmNewClaim_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.ProjectSOLineMap.End
+
+Program.Sub.ProjectSOLineExec.Start
+f.Intrinsic.Control.Try
+	v.Local.i.Declare
+	v.Local.ssql.Declare
+	f.Intrinsic.String.Split(v.Global.sSQLMap,";",v.Local.ssql)
+	f.Intrinsic.Control.For(v.local.i,0,v.Local.ssql.UBound,1)
+		F.Intrinsic.Control.If(V.Local.ssql(V.Local.i).trim,<>,"")
+			f.ODBC.Connection!con.Execute(v.Local.ssql(v.Local.i))
+		F.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.Next(v.Local.i)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(frmNewClaim_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.ProjectSOLineExec.End
+
+Program.Sub.setColumnProperties.Start
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_CODE","Caption","Schedule Code")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SITE_INSTRUCTION","Caption","Site Instruction")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","DESCRIPTION","Caption","Description")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","Caption","Schedule Rate")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","Caption","Less Prev Claims")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","Caption","Value This Claim")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","Caption","PL")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimAll","Caption","Claim")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_CODE","ReadOnly","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SITE_INSTRUCTION","ReadOnly","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","DESCRIPTION","ReadOnly","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","ReadOnly","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","ReadOnly","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","ReadOnly","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","ReadOnly","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimAll","ReadOnly","False")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_CODE","AllowEdit","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SITE_INSTRUCTION","AllowEdit","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","DESCRIPTION","AllowEdit","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","AllowEdit","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","AllowEdit","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","AllowEdit","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","AllowEdit","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimAll","AllowEdit","True")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_CODE","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SITE_INSTRUCTION","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","DESCRIPTION","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","HeaderFontBold","True")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimAll","HeaderFontBold","True")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","HeaderHAlignment","far")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","HeaderHAlignment","far")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","HeaderHAlignment","far")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","HeaderHAlignment","Center")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimAll","HeaderHAlignment","Center")
+
+Gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","CellHAlignment","Right")
+Gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","CellHAlignment","far")
+Gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","CellHAlignment","far")
+Gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","CellHAlignment","Left")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","SCHEDULE_RATE","DisplayCustomNumeric","###,###,###,###.00")
+Gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","HistAmt","DisplayCustomNumeric","###,###,###,###.00")
+Gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimVal","DisplayCustomNumeric","###,###,###,###.00")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PL","Width","30")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","ClaimAll","Width","30")
+
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PHASE","Visible","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PROJECT","Visible","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","POSITION","Visible","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","CLAIMNO","Visible","False")
+gui.frmNewClaim.gsgcNewClaim.SetColumnProperty("gvNC","PREVCALCNOTE","Visible","False")
+Program.Sub.setColumnProperties.End
+
+Program.Sub.cmdRetention_Click.Start
+Program.Sub.cmdRetention_Click.End
+
+Program.Sub.cmdSave_Click.Start
+v.Local.i.Declare(long)
+v.Local.ssql.Declare(string)
+V.Local.lrws.Declare(long)
+v.Local.sret.Declare(string)
+v.Local.sRefr.Declare(string)
+v.Local.sAttn.Declare(string)
+v.Local.sCont.Declare(string)
+v.Local.sTrac.Declare(string)
+v.Local.sdesc.Declare(string)
+v.Local.sSite.Declare(string)
+v.Local.fRetn.Declare(float)
+
+f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dtNC.RowCount--,1)
+	v.local.lrws.set(v.datatable.dtNC(v.local.i).rowstate)
+	f.Intrinsic.Control.If(v.Local.lrws,<>,8)
+		v.Local.sdesc.Set(v.DataTable.dtNC(v.Local.i).DESCRIPTION!FIELDVALTRIM)
+		v.Local.sSite.Set(v.DataTable.dtNC(v.Local.i).SITE_INSTRUCTION!FIELDVALTRIM)
+		f.Intrinsic.String.Build("SELECT * FROM GAB_5270_CLAIML WHERE Project='{0}' AND Phase='{1}' AND ClaimNo='{2}'",v.Global.sProjectNumber.Trim,V.DataTable.dtNC(V.Local.I).Phase!FIELDVALTRIM,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+		f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sret)
+		f.Intrinsic.Control.If(v.Local.sret.Trim,=,"")
+			'INSERT
+			v.Local.ssql.Set("INSERT INTO GAB_5270_CLAIML VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')")
+			f.Intrinsic.String.build(v.Local.ssql,v.Global.sProjectNumber,v.DataTable.dtNC(v.Local.i).SCHEDULE_CODE!FIELDVALTRIM,v.Local.sSite.PSQLFriendly,v.Local.sdesc.PSQLFriendly,v.DataTable.dtNC(v.Local.i).SCHEDULE_RATE!FIELDVALTRIM,v.DataTable.dtNC(v.Local.i).ClaimVal!FIELDVALTRIM,v.DataTable.dtNC(v.Local.i).PHASE!FIELDVALTRIM,v.DataTable.dtNC(v.Local.i).POSITION!FIELDVALTRIM,v.Screen.frmNewClaim!lblNextClaim.Caption,V.DataTable.dtNC(v.Local.i).HistAmt!fieldval,V.DataTable.dtNC(v.Local.i).PL!fieldvalTrim,v.local.ssql)
+			f.ODBC.Connection!con.execute(v.Local.ssql)
+		F.Intrinsic.Control.Else
+			'UPDATE
+			f.Intrinsic.String.Build("UPDATE GAB_5270_CLAIML SET VALUE_CLAIM='{0}', PL='{4}' WHERE PROJECT='{1}' AND PHASE='{2}' AND CLAIMNO='{3}'",v.DataTable.dtNC(v.Local.i).ClaimVal!FIELDVALTRIM,v.Global.sProjectNumber,v.DataTable.dtNC(v.Local.i).PHASE!FIELDVALTRIM,v.Screen.frmNewClaim!lblNextClaim.Caption,v.DataTable.dtNC(v.Local.i).PL!FIELDVALTRIM,v.Local.ssql)
+			f.ODBC.Connection!con.execute(v.Local.ssql)
+		f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.i)
+
+'Retention Section
+'Check if Retention Exists
+f.Intrinsic.Control.If(v.screen.frmNewClaim!txtRetention.text,=,"")
+	v.Local.fRetn.Set(0)
+f.Intrinsic.Control.Else
+	v.Local.fRetn.Set(v.screen.frmNewClaim!txtRetention.text)
+f.Intrinsic.Control.EndIf
+'Multiply by -1
+f.Intrinsic.Math.Mult(v.Local.fRetn,-1,v.Local.fRetn)
+f.Intrinsic.String.Build("SELECT * FROM GAB_5270_CLAIML WHERE Project='{0}' AND ClaimNo='{1}' AND SCHEDULE_CODE='RETENTION'",v.Global.sProjectNumber,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sret)
+f.Intrinsic.Control.If(v.Local.sret.Trim,=,"")
+	'INSERT Retention Line
+	v.Local.ssql.Set("INSERT INTO GAB_5270_CLAIML VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')")
+	f.Intrinsic.String.build(v.Local.ssql,v.Global.sProjectNumber,"RETENTION","RETENTION","RETENTION",v.Local.fRetn,v.Local.fRetn,"RETN","0",v.Screen.frmNewClaim!lblNextClaim.Caption,"","RT",v.local.ssql)
+	f.ODBC.Connection!con.execute(v.Local.ssql)
+F.Intrinsic.Control.Else
+	'UPDATE Retention Line
+	f.Intrinsic.String.Build("UPDATE GAB_5270_CLAIML SET VALUE_CLAIM='{0}' WHERE PROJECT='{1}' AND CLAIMNO='{2}' AND SCHEDULE_CODE='RETENTION'",V.Local.fRetn,v.Global.sProjectNumber,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+	f.ODBC.Connection!con.execute(v.Local.ssql)
+f.Intrinsic.Control.EndIf
+
+'Header information
+'Grab Reference ID
+f.Intrinsic.string.Build("SELECT REFERENCE_ID FROM GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'",v.Global.sProjectNumber,v.Local.ssql)
+f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sRefr)
+'Attention
+f.Intrinsic.string.Build("SELECT ATTENTION FROM GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'",v.Global.sProjectNumber,v.Local.ssql)
+f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sAttn)
+'Contact
+f.Intrinsic.string.Build("SELECT CONTACT_NAME FROM V_PROJECT_MASTER WHERE PROJECT='{0}'",v.Global.sProjectNumber,v.Local.ssql)
+f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sCont)
+'Contract ID
+f.Intrinsic.string.Build("SELECT CONTRACT_ID FROM GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'",v.Global.sProjectNumber,v.Local.ssql)
+f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sTrac)
+'Check if Header exists
+f.Intrinsic.String.Build("SELECT * FROM GAB_5270_CLAIMH WHERE Project='{0}' AND ClaimNo='{1}'",v.Global.sProjectNumber,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+F.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sret)
+f.Intrinsic.Control.If(v.Local.sret.Trim,=,"")
+	'INSERT HEADER
+	v.Local.ssql.Set("INSERT INTO GAB_5270_CLAIMH VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')")
+	F.Intrinsic.String.Build(v.Local.ssql,v.Global.sProjectNumber,v.Local.sRefr,v.Global.sClient,v.Local.sAttn,v.Local.sCont,v.Local.strac,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Ambient.Date.PervasiveDate,"",v.Local.ssql)
+	F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.UI.Msgbox("Claim Successfully Created!")
+		
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.cmdPrint_Click.Start
+f.Intrinsic.Control.CallSub("PrintCore","sProject",v.Global.sProjectNumber,"sClaimNo",v.Screen.frmNewClaim!lblNextClaim.caption,"sFlag","P")
+Program.Sub.cmdPrint_Click.End
+
+Program.Sub.cmdEmail_Click.Start
+f.Intrinsic.Control.CallSub("PrintCore","sProject",v.Global.sProjectNumber,"sClaimNo",v.Screen.frmNewClaim!lblNextClaim.caption,"sFlag","E")
+Program.Sub.cmdEmail_Click.End
+
+Program.Sub.frmNewClaim_UnLoad.Start
+f.odbc.Connection!con.Close
+f.Intrinsic.Control.End
+Program.Sub.frmNewClaim_UnLoad.End
+
+Program.Sub.calcTotals.Start
+v.Local.fTotal.Declare(Float)
+v.Local.fGross.Declare(float)
+v.Local.fPrevC.Declare(Float)
+v.Local.fPrevH.Declare(float)
+v.Local.fLTotl.Declare(float)
+v.Local.fReten.Declare(float)
+v.Local.sExprs.Declare(string)
+v.Local.sGross.Declare(string)
+v.Local.sOTotl.Declare(string)
+v.Local.sPrevH.Declare(string)
+
+'Set Prev Total Value
+f.Intrinsic.Control.If(v.Screen.frmNewClaim!lblHistClaim.caption,=,"")
+	v.Local.fPrevH.Set(0)
+f.Intrinsic.Control.Else
+	v.Local.fPrevH.Set(v.Screen.frmNewClaim!lblHistClaim.caption)
+f.Intrinsic.Control.EndIf
+
+
+'Set Claim Total Value
+f.Intrinsic.Control.If(v.Screen.frmNewClaim!txtTotalClaim.text,=,"")
+	v.Local.fTotal.Set(0)
+f.Intrinsic.Control.Else
+	v.Local.fTotal.Set(v.Screen.frmNewClaim!txtTotalClaim.text)
+f.Intrinsic.Control.EndIf
+
+'Set Retention value
+f.Intrinsic.Control.If(v.Screen.frmNewClaim!txtRetention.text,=,"")
+	v.Local.fReten.Set(0)
+f.Intrinsic.Control.Else
+	v.Local.fReten.Set(v.Screen.frmNewClaim!txtRetention.text)
+f.Intrinsic.Control.EndIf
+
+'Set Total Gross Value
+f.Intrinsic.Control.If(v.Screen.frmNewClaim!txtTotalGross.text,=,"")
+	v.Local.fGross.Set(0)
+f.Intrinsic.Control.Else
+	v.Local.fGross.Set(v.Screen.frmNewClaim!txtTotalGross.text)
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.If(v.Args.sGrid,=,"Y")
+	f.Intrinsic.String.build("PROJECT='{0}'",v.Global.sProjectNumber,V.Local.sExprs)
+	f.Data.DataTable.Compute("dtNC","SUM (ClaimVal)",v.Local.sExprs,v.Local.fTotal)
+	'Add in Previous claims, calculate line total
+	v.Local.fPrevC.Set(v.DataTable.dtNC(v.Args.sRowindex).HistAmt!FIELDVALFLOAT)
+	f.Intrinsic.Math.Add(v.local.fPrevC,v.Args.sValue,v.Local.fLTotl)
+	
+	'If line total is greater than schedule rate, throw up an error
+	f.Intrinsic.Control.If(v.Local.fLTotl,>,v.DataTable.dtNC(v.Args.sRowindex).SCHEDULE_RATE!FIELDVALFLOAT)
+		F.Intrinsic.UI.Msgbox("WARNING: Value entered is greater than Scheduled Rate.")
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+'Set Total Claim Value
+F.Intrinsic.String.Format(V.Local.fTotal,"###,###,###.00",V.Local.sOTotl)
+gui.frmNewClaim.txtTotalClaim.Text(v.Local.sOTotl)
+
+'Set Gross Claim Value
+f.Intrinsic.Math.Sub(v.Local.fTotal,v.Local.fReten,v.Local.fGross)
+F.Intrinsic.String.Format(V.Local.fGross,"###,###,###.00",V.Local.sGross)
+gui.frmNewClaim.txtTotalGross.Text(v.Local.sGross)
+
+'Set prev + cur Claim Value
+f.Intrinsic.Math.Add(v.Local.fTotal,v.Local.fPrevH,v.Local.fPrevH)
+f.Intrinsic.String.Format(v.Local.fPrevH,"###,###,###,###.00",v.Local.sPrevH)
+gui.frmNewClaim.txtCurPrevClaim.Text(v.Local.sPrevH)
+Program.Sub.calcTotals.End
+
+Program.Sub.gsgcNewClaim_CellValueChanged.Start
+v.Local.bClaimAll.Declare
+v.Local.fPrevAll.Declare
+v.Local.fSchedRt.Declare
+v.Local.fTotal.Declare
+F.Intrinsic.Control.If(V.Args.Column,=,"ClaimAll")
+	v.Local.bClaimAll.Set(v.Args.value)
+	gui.frmNewClaim.gsgcNewClaim.GetCellValueByColumnName("gvNC","SCHEDULE_RATE",v.Args.rowindex,v.Local.fSchedRt)
+	gui.frmNewClaim.gsgcNewClaim.GetCellValueByColumnName("gvNC","HistAmt",v.Args.rowindex,v.Local.fPrevAll)
+	f.Intrinsic.Control.If(v.Local.bClaimAll)
+		f.Intrinsic.Math.Sub(v.Local.fSchedRt,v.Local.fPrevAll,v.Local.fTotal)
+		f.Data.DataTable.SetValue("dtNC",v.Args.rowindex,"ClaimVal",v.Local.fTotal)
+	f.Intrinsic.Control.Else
+		f.Data.DataTable.SetValue("dtNC",v.Args.rowindex,"ClaimVal",0)
+	f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.CallSub(calcTotals,"sGrid","Y","sValue",v.Args.value,"sRowIndex",v.Args.rowindex)
+f.Intrinsic.Control.Else
+	f.Intrinsic.Control.CallSub(calcTotals,"sGrid","Y","sValue",v.Args.value,"sRowIndex",v.Args.rowindex)
+f.Intrinsic.Control.EndIf
+Program.Sub.gsgcNewClaim_CellValueChanged.End
+
+Program.Sub.txtRetention_LostFocus.Start
+f.Intrinsic.Control.CallSub(calcTotals,"sGrid","N")
+Program.Sub.txtRetention_LostFocus.End
+
+Program.Sub.cmdCreateInv_Click.Start
+gui.frmNewClaim..Visible(False)
+f.Intrinsic.UI.InvokeWaitDialog("Preparing Invoice Creation, please wait.")
+V.Local.sFiles.Declare(String)
+V.Local.sret.Declare(string)
+v.Local.srows.Declare(string)
+v.Local.i.Declare(long)
+v.Local.svals.Declare(string)
+v.Local.shold.Declare(string)
+v.Local.sBuildData.Declare(string)
+V.Local.ssql.Declare(string)
+
+v.Local.stemp.Declare(string)
+V.Local.Lobob.Declare(long)
+v.Local.sblank.Declare(string)
+v.Local.sblank.set("")
+v.Local.sCustomer.declare(string)
+v.Local.sDesc.Declare(string)
+v.Local.sUM.Declare(string)
+v.Local.sProdLineCD.Declare(string)
+v.Local.fQty.declare(float)
+v.Local.sOrderNo.Declare(string)
+v.Local.fPrice.Declare(Float)
+v.Local.sUploadType.Declare(string)
+v.Local.dDateNow.Declare(date)
+v.Local.sCustPO.Declare(string)
+v.Local.sLocation.Declare(string)
+v.Local.nItemCtr.Declare(Float)
+v.Local.spart.Declare(string)
+v.Local.fCost.Declare(float)
+v.Local.fExtension.declare(float)
+v.Local.fExtTotal.Declare(float)
+v.Local.sUser1.Declare(string)
+v.Local.sUser2.Declare(string)
+v.Local.sUser3.Declare(string)
+v.Local.sCustDesc.Declare(string)
+v.Local.sTax.Declare(string)
+v.Local.sShipName.Declare(string)
+v.Local.sShipAddr1.Declare(string)
+v.Local.sShipAddr2.Declare(string)
+v.Local.sshipAddr3.Declare(string)
+v.Local.sShipCity.Declare(string)
+v.Local.sShipST.Declare(string)
+v.Local.sShipCountry.Declare(string)
+v.Local.sShipZip.Declare(string)
+v.Local.sShipPhone.Declare(string)
+v.Local.sShipVia.Declare(string)
+v.Local.sBillName.Declare(string)
+v.Local.sBillAddr1.Declare(string)
+v.Local.sBillAddr2.Declare(string)
+v.Local.sBillAddr3.Declare(string)
+v.Local.sBillCity.Declare(string)
+v.Local.sBillST.Declare(string)
+v.Local.sBillCountry.Declare(string)
+v.Local.sBillZip.Declare(string)
+v.Local.sBillPhone.Declare(string)
+v.Local.fshippingprice.Declare(float)
+v.Local.fRetn.Declare(float)
+v.Local.sContactEmail.Declare(string)
+v.Local.sContactPhone.Declare(string)
+v.Local.sShipPrice.Declare(string)
+V.Local.srowstate.Declare(string)
+v.Local.lrws.Declare
+v.Local.sPhase.Declare(string)
+v.Local.sClaimNo.Declare(string)
+
+F.Intrinsic.String.Build("SELECT * FROM GAB_5270_CLAIMH WHERE Project='{0}' AND ClaimNo='{1}'",v.Global.sProjectNumber,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+f.ODBC.Connection!con.executeandreturn(v.Local.ssql,v.Local.sret)
+f.Intrinsic.Control.If(v.Local.sret.Trim,=,"")
+	f.Intrinsic.UI.Msgbox("Please save claim first before generating invoice.")
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+'Variables
+v.Local.sUploadType.Set("O")
+f.Intrinsic.Control.If(v.Global.sClient.Trim,=,"")
+	v.Global.sClient.Set(v.Screen.frmNewClaim!lblCustomer.caption)
+f.Intrinsic.Control.EndIf
+v.Local.sCustomer.Set(V.Global.sClient)
+
+v.Local.dDateNow.Set(v.Ambient.Date)
+v.Local.sCustPO.Set("")
+v.Local.sShipVia.Set("")
+v.Local.sUM.Set("EA")
+V.Local.fQty.Set(1)
+V.Local.sClaimNo.Set(v.Screen.frmNewClaim!lblNextClaim.Caption)
+
+'Retention Line set
+f.Intrinsic.Control.If(v.Screen.frmNewClaim!txtRetention.text,=,"")
+	v.Local.fretn.Set(0)
+f.Intrinsic.Control.else
+	v.Local.fretn.Set(v.Screen.frmNewClaim!txtRetention.text)
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.If(v.Local.fRetn,<>,0)
+	'Add the row in for retention
+	f.Data.DataTable.AddRow("dtNC","Project",v.Global.sProjectNumber,"Phase","RETN","POSITION","0","SCHEDULE_CODE","RETENTION","SITE_INSTRUCTION","RETENTION","SCHEDULE_RATE",v.Local.fRetn,"HistAmt",0,"ClaimVal",v.Local.fRetn,"PL","RT")
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.for(v.Local.i,0,v.DataTable.dtNC.RowCount--,1)
+	v.local.lrws.set(v.datatable.dtNC(v.local.i).rowstate)
+	f.intrinsic.control.if(v.local.lrws,<>,8)	
+		V.Local.fPrice.Set(v.DataTable.dtNC(v.Local.i).ClaimVal!FIELDVALTRIM)	
+		f.Intrinsic.Control.If(v.Local.fPrice,<>,0)
+			v.Local.spart.Set(v.DataTable.dtNC(v.Local.i).SITE_INSTRUCTION!FIELDVALTRIM)
+			v.Local.sDesc.Set(v.DataTable.dtNC(v.Local.i).DESCRIPTION!FIELDVALTRIM)
+			V.Local.sProdLineCD.Set(v.DataTable.dtNC(v.Local.i).PL!FIELDVALTRIM)
+			'TRANSACTION
+			F.Intrinsic.String.RPad(V.Local.sUploadType.Trim," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Customer
+			F.Intrinsic.String.RPad(V.local.sCustomer.Trim," ",7,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Order Number / Quote
+			F.Intrinsic.String.LPad(" "," ",7,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Freight
+			F.Intrinsic.String.RPad(v.Local.sShipPrice,"0",10,v.Local.stemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank, TAX_FREIGHT_FLAG
+			F.Intrinsic.String.RPad("Y"," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank, FREIGHTPERPIECE
+			F.Intrinsic.String.RPad(""," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Date Due
+			F.Intrinsic.String.Format(V.Local.dDateNow,"YYYYMMDD",V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Date Ordered
+			F.Intrinsic.String.Format(V.Local.dDateNow,"YYYYMMDD",V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank 2 user fields
+			F.Intrinsic.String.RPad(" "," ",60,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'User field 3
+			F.Intrinsic.String.RPad(V.Global.sProjectNumber," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'User field 4
+			F.Intrinsic.String.RPad(V.Local.sClaimNo," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'User field 5
+			F.Intrinsic.String.RPad(""," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'GSS User
+			F.Intrinsic.String.RPad(V.Caller.User," ",8,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Cust PO
+			F.Intrinsic.String.RPad(V.Local.sCustPO," ",15,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'After Cust PO
+			F.Intrinsic.String.RPad(" "," ",15,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'FreightCurrencyFlag 1 to used order currency
+			F.Intrinsic.String.RPad("1"," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			
+			'Blank Shipping data not used here except Ship Via and Carrier
+			'(putting an S would require reading the ShipTo Address and populating it.
+			F.Intrinsic.String.RPad("S"," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Ship Via (20) try not putting in the Ship-Via and Carrier V.Screen.FMain!txtShipMethod.Text
+			F.Intrinsic.String.RPad(v.Local.sShipVia," ",20,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Carrier code 
+			F.Intrinsic.String.RPad(" "," ",6,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			F.Intrinsic.String.RPad(" "," ",204,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Order Type - this is it!
+			f.Intrinsic.String.RPad("X"," ",1,V.Local.stemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank the rest
+			F.Intrinsic.String.RPad(" "," ",150,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Transfer Location
+			F.Intrinsic.String.RPad(V.Local.sLocation," ",2,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank
+			F.Intrinsic.String.RPad(" "," ",85,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Line Number 3 char
+			F.Intrinsic.String.Format(V.Local.nItemCtr,"000",V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Line no zero on the right for record no kinda
+			F.Intrinsic.String.RPad("0","0",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Quantity - note position 1353 will be set to 1 to allow if nOrderQty is negative
+			F.Intrinsic.Control.If(V.Local.fQty,<,0)
+					F.Intrinsic.String.Format(V.Local.fQty,"000000000.0000",V.Local.sTemp)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.Format(V.Local.fQty,"000000000.0000",V.Local.sTemp)
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.String.Replace(V.Local.sTemp,".","",V.Local.sTemp)
+			F.Intrinsic.String.Replace(V.Local.sTemp,"-","",V.Local.sTemp)
+			F.Intrinsic.String.LPad(V.Local.sTemp," ",13,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Freight weight
+			F.Intrinsic.String.RPad("0","0",10,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'UM not required can pull from inventory
+			F.Intrinsic.String.RPad(V.Local.sUM.Trim," ",2,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Part
+			F.Intrinsic.String.RPad(v.Local.spart," ",20,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'blank filler
+			F.Intrinsic.String.RPad(" "," ",18,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Location
+			F.Intrinsic.String.RPad(V.local.sLocation," ",2,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'V.Local.sPrice - Try with a value of 1 as in 0.0001 16 (10,6)
+			f.Intrinsic.Control.If(v.Local.fPrice,<,0)
+				F.Intrinsic.Math.Mult(V.Local.fPrice,-1,V.Local.fPrice)
+				F.Intrinsic.String.Format(V.Local.fPrice,"0000000000.000000",V.Local.sTemp)
+				F.Intrinsic.String.Replace(V.Local.sTemp,".","",V.Local.sTemp)
+				F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			f.Intrinsic.Control.Else
+				F.Intrinsic.String.Format(V.Local.fPrice,"0000000000.000000",V.Local.sTemp)
+				F.Intrinsic.String.Replace(V.Local.sTemp,".","",V.Local.sTemp)
+				F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			f.Intrinsic.Control.EndIf
+			'V.Local.sPrice Quote price ?  16 (10,6)
+			f.Intrinsic.Control.If(v.Local.fPrice,<,0)
+				F.Intrinsic.Math.Mult(V.Local.fPrice,-1,V.Local.fPrice)
+				F.Intrinsic.String.Format(V.Local.fPrice,"0000000000.000000",V.Local.sTemp)
+				F.Intrinsic.String.Replace(V.Local.sTemp,".","",V.Local.sTemp)
+				F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			f.Intrinsic.Control.Else
+				F.Intrinsic.String.Format(V.Local.fPrice,"0000000000.000000",V.Local.sTemp)
+				F.Intrinsic.String.Replace(V.Local.sTemp,".","",V.Local.sTemp)
+				F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			f.Intrinsic.Control.EndIf
+			'V.Local.sCost  16 (10,6)
+			F.Intrinsic.String.Format(V.Local.fCost,"0000000000.000000",V.Local.sTemp)
+			F.Intrinsic.String.Replace(V.Local.sTemp,".","",V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'V.Local.sLineDesc
+			F.Intrinsic.String.Left(V.Local.sDesc,30,V.Local.sTemp)
+			F.Intrinsic.String.RPad(V.Local.sTemp," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'V.Global.sProdLineCode-not required - This will be required as we are creating items that might not be parts
+			F.Intrinsic.String.RPad(V.Local.sProdLineCD," ",3,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Date - Line order
+			F.Intrinsic.String.Format(V.Local.dDateNow,"YYYYMMDD",V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Date - Line promised
+			'F.Intrinsic.Date.DateAddWorkdays(V.Ambient.Date,V.Local.nLeadtime,V.Local.dDateProm)
+			'F.Intrinsic.String.Format(V.Local.dDateProm,"YYYYMMDD",V.Local.sTemp)
+			F.Intrinsic.String.Format(V.Local.dDateNow,"YYYYMMDD",V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'	'User Fields 5 x 30
+			'User Fields 1 x 30
+			F.Intrinsic.String.RPad(v.DataTable.dtNC(v.Local.i).SCHEDULE_CODE!FIELDVALTRIM," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp.Left30,V.Local.sBuildData)
+			'User Fields 2 x 30
+			F.Intrinsic.String.RPad(V.DataTable.dtNC(v.Local.i).Phase!fieldval," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'User Fields 1 x 30
+			F.Intrinsic.String.RPad(V.Local.sUser3.Trim," ",30,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp.Left30,V.Local.sBuildData)
+			'User Fields 2 x 30
+			F.Intrinsic.String.RPad(" "," ",60,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank - This should be Extended Amount 16 length at 1018
+			'Calculate extension for Credit Limit check
+			F.Intrinsic.Math.Mult(V.Local.fQty,V.Local.fPrice,V.Local.fExtension)
+			F.Intrinsic.Math.Add(V.Local.fExtTotal,V.Local.fExtension,V.Local.fExtTotal)
+			F.Intrinsic.String.RPad(" "," ",16,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'NO-DLVR-BEF / MUST-DLVR-BY YYYYMMDD / YYYYMMDD
+			F.Intrinsic.String.RPad(" "," ",16,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'DO NOT NEED TAX STATUS FLAG 1351
+			F.Intrinsic.String.RPad(V.Local.sTax.Trim," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Blank Line Type / Negative Flag / Price Flag / Suff Inventory 1352 / 1353 / 1354 / 1355
+			F.Intrinsic.String.RPad(" "," ",1,V.Local.sTemp)
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Negative Flag 1353 if Quantity is negative set flag to 1 ================================NEGATIVE
+			F.Intrinsic.Control.If(V.Local.fQty,<,0)
+					F.Intrinsic.String.RPad("1"," ",1,V.Local.sTemp)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.String.RPad(" "," ",1,V.Local.sTemp)
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.String.Concat(V.Local.sBuildData,V.Local.sTemp,V.Local.sBuildData)
+			'Time to blank it all!
+			f.Intrinsic.String.RPad(" "," ",510,v.Local.stemp)
+			f.Intrinsic.String.Concat(v.Local.sBuildData,v.Local.stemp,v.Local.sBuildData)
+			F.Intrinsic.String.Concat(v.Local.sBuildData,v.Ambient.NewLine,v.Local.sBuildData)
+			'ORDUPCM3 will fill to 4636 string length
+		f.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.i)
+'Reset i
+v.Local.i.Set(0)
+'Delete the row out when finished.
+f.Data.DataTable.DeleteRow("dtNC",v.DataTable.dtNC.RowCount--)
+v.Local.sfilename.Declare(string)
+'LDTTTCCC
+f.Intrinsic.String.Concat(v.Caller.FilesDir,"\LD",V.Caller.Terminal,V.Caller.CompanyCode,v.Local.sfilename)
+f.Intrinsic.File.String2File(v.Local.sfilename,v.Local.sBuildData)
+
+'Run
+V.Local.sfile.Declare(string)
+f.Intrinsic.String.Concat("LD",V.Caller.Terminal,V.Caller.CompanyCode,v.Local.sfile)
+v.Local.sparams.Declare(string)
+F.Intrinsic.String.Concat(V.Caller.CompanyCode,"!*!",V.Caller.User,"!*!",V.Local.sFile,V.Local.sParams)
+F.Global.General.CallWrapperSync(6004,V.Local.sParams)
+'Load in the file
+v.Local.sMyOrder.Declare(string)
+v.Local.sPhaseDesc.Declare(string)
+f.Intrinsic.String.Concat(v.Caller.FilesDir,"\ORDQTE.txt",v.Local.sfilename)
+f.Intrinsic.File.File2String(v.Local.sfilename,v.Local.sMyOrder)
+'Have to do left 7 character function to get rid of the line break
+f.Intrinsic.String.Left(v.Local.sMyOrder,7,v.Local.sMyOrder)
+F.Intrinsic.Control.If(V.Local.sMyOrder.Trim,<>,"")
+	'Update header with Project
+'	f.Intrinsic.String.Build("UPDATE SHIPMENT_HEADER SET PROJECT='{0}' WHERE ORDER_NO='{1}' AND RECORD_TYPE = 'A'",V.Global.sProjectNumber,V.Local.sMyOrder.Trim,v.Local.ssql)
+'	f.ODBC.Connection!con.execute(v.Local.ssql)
+	F.Intrinsic.String.Build("SELECT * FROM V_SHIPMENT_LINES WHERE ORDER_NO='{0}'",v.Local.sMyOrder,v.Local.ssql)
+	f.Intrinsic.Control.If(v.DataTable.dtSL.Exists)
+		f.Data.DataTable.Close("dtSL")
+	f.Intrinsic.Control.EndIf
+	f.Data.DataTable.CreateFromSQL("dtSL","con",v.Local.ssql)
+	'Update Phase from USER_5 field (temp holder)
+'	f.Intrinsic.String.Build("UPDATE SHIPMENT_LINES SET PHASE=LN_USER_2 WHERE ORDER_NO='{0}' AND RECORD_TYPE='L'",v.Local.sMyOrder,v.Local.ssql)
+'	F.ODBC.Connection!con.execute(v.Local.ssql)
+	'Blank User 5
+'	f.Intrinsic.String.Build("UPDATE SHIPMENT_LINES SET LN_USER_2='' WHERE ORDER_NO='{0}' AND RECORD_TYPE='L'",v.Local.sMyOrder,v.Local.ssql)
+'	F.ODBC.Connection!con.execute(v.Local.ssql)	
+	'Loop through shipment line to find retention line and update
+	f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dtSL.RowCount--,1)
+		'Update price if Retention
+		f.Intrinsic.Control.If(v.DataTable.dtSL(v.Local.i).PART!FIELDVALTRIM,=,"RETENTION","or",v.DataTable.dtSL(v.Local.i).LN_USER_1!FIELDVALTRIM,=,"DEDUCTIONS")
+			'f.Intrinsic.Math.Mult(v.Local.fRetn,-1,v.Local.fRetn)
+			f.Intrinsic.String.Build("UPDATE SHIPMENT_LINES SET PRICE=PRICE*-1, EXTENSION=EXTENSION*-1, DISCOUNT_PRICE=DISCOUNT_PRICE*-1, PRICE_ORDER=PRICE_ORDER*-1, PRICE_DISC_ORD=PRICE_DISC_ORD*-1, EXTENSION_ORDER=EXTENSION_ORDER*-1 WHERE ORDER_NO='{0}' and ORDER_REC='{1}' AND RECORD_TYPE='L'",v.Local.sMyOrder,v.DataTable.dtSL(v.Local.i).ORDER_REC!FIELDVALTRIM,v.Local.ssql)
+			F.ODBC.Connection!con.execute(v.Local.ssql)
+		F.Intrinsic.Control.EndIf
+	f.Intrinsic.Control.Next(v.Local.i)
+f.Intrinsic.Control.EndIf
+
+v.Local.sMessage.Declare(string)
+f.Intrinsic.String.Concat("Order Number ",v.Local.sMyOrder," has been succesfully created and is now ready to be invoiced.",v.Local.sMessage)
+f.Intrinsic.UI.Msgbox(v.Local.sMessage)
+
+f.Intrinsic.Control.CallSub(frmNewClaim_UnLoad)
+Program.Sub.cmdCreateInv_Click.End
+
+Program.Sub.cmdDelete_Click.Start
+v.Local.lret.Declare(string)
+v.Local.ssql.Declare(string)
+f.Intrinsic.UI.Msgbox("Are you sure you want to delete this claim?","Delete Claim",4,v.Local.lret)
+
+f.Intrinsic.Control.If(v.Local.lret,=,6)
+	f.Intrinsic.string.Build("DELETE FROM GAB_5270_CLAIMH WHERE PROJECT='{0}' AND CLAIMNO='{1}'",v.Global.sProjectNumber,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+	F.ODBC.Connection!con.execute(v.Local.ssql)
+	
+	f.Intrinsic.string.Build("DELETE FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND CLAIMNO='{1}'",v.Global.sProjectNumber,v.Screen.frmNewClaim!lblNextClaim.Caption,v.Local.ssql)
+	f.ODBC.Connection!con.execute(v.Local.ssql)
+	f.Intrinsic.UI.Msgbox("Claim Successfully Deleted.")
+	f.Intrinsic.Control.CallSub(frmNewClaim_UnLoad)
+f.Intrinsic.Control.EndIf
+Program.Sub.cmdDelete_Click.End
+
+Program.Sub.cmdBrowseSO_Click.Start
+V.Local.sSQL.Declare(String)
+V.Local.sCol.Declare(String)
+V.Local.sColW.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sCustomer.Declare
+v.Local.sCustomer.Set(v.Global.sClient)
+
+V.Local.sSQL.set("select ORDER_NO, CUSTOMER_PO, NAME_CUSTOMER from V_ORDER_HEADER LEFT JOIN V_CUSTOMER_MASTER ON V_ORDER_HEADER.CUSTOMER = V_CUSTOMER_MASTER.CUSTOMER WHERE V_ORDER_HEADER.CUSTOMER='{0}'")
+F.Intrinsic.String.Build(v.Local.sSQL,v.Local.sCustomer.Trim,v.Local.sSQL)
+'Split Column Names into an array (*!* delimited string)
+F.Intrinsic.String.Split("Order No*!*Customer PO*!*Name Customer","*!*",V.Local.sCol)
+'Split Column widths into an array (*!* delimited string)
+F.Intrinsic.String.Split("1000*!*1000*!*2000","*!*",V.Local.sColW)
+F.Intrinsic.UI.Browser("Select Order",con,V.Local.sSQL,V.Local.sCol,V.Local.sColW,V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+	f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+	gui.frmNewClaim.txtSalesOrder.Text(v.Local.sRet(0))
+F.Intrinsic.Control.EndIf
+Program.Sub.cmdBrowseSO_Click.End
+
+Program.Sub.cmdProgress_Click.Start
+f.Intrinsic.Control.CallSub(addPB)
+Program.Sub.cmdProgress_Click.End
+
+Program.Sub.Comments.Start
+${$5$}$2.0.0.0$}$2
+${$6$}$Ryan$}$20201016171838164$}$zT7b+sV1eISPUtInNavz/hSFWiol/4DuywBjag0Gz9dqLGZwz69il784jbDgZbv5kOpzh9MylLE=
+Program.Sub.Comments.End
