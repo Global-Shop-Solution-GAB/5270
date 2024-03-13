@@ -1,0 +1,111 @@
+Program.Sub.ScreenSU.Start
+Gui.frmProjectSync..Create
+Gui.frmProjectSync..Caption("Project Sync")
+Gui.frmProjectSync..Size(4260,1770)
+Gui.frmProjectSync..MinX(0)
+Gui.frmProjectSync..MinY(0)
+Gui.frmProjectSync..Position(0,0)
+Gui.frmProjectSync..BackColor(-2147483633)
+Gui.frmProjectSync..MousePointer(0)
+Gui.frmProjectSync.txtBatch.Create(TextBox,"",True,1770,300,0,315,315,True,0,"Arial",8,-2147483643,1)
+Gui.frmProjectSync.cmdSync.Create(Button)
+Gui.frmProjectSync.cmdSync.Size(855,375)
+Gui.frmProjectSync.cmdSync.Position(2355,285)
+Gui.frmProjectSync.cmdSync.Caption("Sync")
+Gui.frmProjectSync.cmdSync.Event(Click,cmdSync_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'F.Intrinsic.Debug.ShowCallerInfo
+'Hook #15226
+F.Intrinsic.Control.If(V.Caller.Hook,=,"15226")
+	f.Intrinsic.Control.CallSub(updateProj,"sBatch",v.passed.Batch)
+f.Intrinsic.Control.Else
+	gui.frmProjectSync..Show
+f.Intrinsic.Control.EndIf
+Program.Sub.Main.End
+
+Program.Sub.cmdSync_Click.Start
+f.Intrinsic.Control.CallSub(updateProj,"sBatch",v.Screen.frmProjectSync!txtBatch.text)
+Program.Sub.cmdSync_Click.End
+
+Program.Sub.updateProj.Start
+V.Local.SSQL.Declare(STRING)
+V.Local.SORDERNO.Declare(STRING)
+v.Local.sInvoice.Declare(string)
+V.Local.SCLAIMNO.Declare(STRING)
+V.Local.LCLAIMNO.Declare(LONG)
+V.Local.smessage.Declare(string)
+v.Local.sSEQ.Declare(string)
+v.Local.sProj.Declare(string)
+v.Local.sPhse.Declare(string)
+v.Local.sSONm.Declare(string)
+v.Local.sSOLn.Declare(string)
+v.Local.sSOSq.Declare(string)
+v.Local.lSEQ.Declare(long)
+v.Local.i.Declare(long)
+v.Local.j.Declare(long)
+'THE INVOICE HEADER NOW CONTAINS USER_3 FIELD FOR PROJECT, USER_4 FIELD FOR CLAIM NUMBER
+'THE INVOICE LINE CONTAINS USER_1 FIELD FOR SCHEDULE_CODE, USER_2 FIELD FOR PHASE
+'Update header's & line's project phase fields from USER 5 & USER 2 fields respectively.  USER_4 is CLAIM
+V.Local.SSQL.SET("select DISTINCT INVOICE from V_ORDER_HIST_HEAD where batch='{0}'")
+F.Intrinsic.String.Build(V.Local.SSQL,V.Args.sBatch,V.Local.SSQL)
+F.ODBC.Connection!CON.opencompanyconnection
+F.Data.DataTable.CreateFromSQL("dt","con",v.Local.sSQL,true)
+F.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dt.RowCount--,1)
+	'create the order header table
+	f.Intrinsic.Control.If(V.DataTable.dtHD.Exists)
+		f.Data.DataTable.Close("dtHD")
+	f.Intrinsic.Control.EndIf
+	f.Intrinsic.String.Build("SELECT * FROM V_ORDER_HIST_HEAD WHERE INVOICE='{0}'",v.DataTable.dt(v.Local.i).INVOICE!FIELDVALTRIM,V.Local.SSQL)
+	f.Data.DataTable.CreateFromSQL("dtHD","con",v.Local.SSQL,true)
+	'UPDATE the project from value user field 5
+	f.Intrinsic.String.Build("UPDATE ORDER_HIST_HEAD SET PROJECT=USER_3 WHERE INVOICE='{0}'",V.DataTable.dt(v.Local.i).INVOICE!FIELDVALTRIM,V.Local.SSQL)
+	F.ODBC.Connection!CON.EXECUTE(v.Local.ssql)
+	'Update Invoice Record
+	f.Intrinsic.String.Build("UPDATE GAB_5270_CLAIMH SET INVOICE='{0}' WHERE PROJECT='{1}' AND CLAIMNO='{2}'",V.DataTable.dt(v.Local.i).INVOICE!FIELDVALTRIM,v.DataTable.dtHD(0).USER_3!FIELDVALTRIM,v.DataTable.dtHD(0).USER_4!FIELDVALTRIM,V.Local.SSQL)
+	F.ODBC.Connection!CON.EXECUTE(v.Local.ssql)
+	
+	'create the order lines table
+	F.Intrinsic.Control.If(v.DataTable.dtLn.Exists)
+		f.Data.DataTable.Close("dtLN")
+	f.Intrinsic.Control.EndIf
+	f.Intrinsic.String.Build("SELECT * FROM V_ORDER_HIST_LINE WHERE INVOICE='{0}'",V.DataTable.dt(v.Local.i).INVOICE!FIELDVALTRIM,v.Local.ssql)
+	F.Data.DataTable.CreateFromSQL("dtLN","con",v.Local.SSQL)
+	f.Intrinsic.Control.For(v.Local.j,0,v.DataTable.dtLN.RowCount--,1)
+		f.Intrinsic.String.Build("UPDATE ORDER_HIST_LINE SET PHASE=USER_2 WHERE INVOICE='{0}'",v.DataTable.dtLN(v.Local.j).INVOICE!FIELDVALTRIM,v.Local.ssql)
+		f.ODBC.Connection!CON.execute(v.Local.ssql)
+		'Get the max sequence from project xref table
+		f.Intrinsic.String.Build("SELECT MAX(SEQ) FROM PROJECT_XREF WHERE PROJECT='{0}' AND PHASE='{1}'",v.DataTable.dtHD(0).USER_3!fieldvaltrim,v.DataTable.dtLN(v.Local.j).USER_2!FIELDVALTRIM,v.Local.ssql)
+		f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.sSeq)
+		f.Intrinsic.Control.If(v.Local.sSEQ.Trim,<>,"")
+			v.Local.lSEQ.Set(v.Local.sSEQ)
+			f.Intrinsic.Math.Add(v.Local.lSEQ,1,v.Local.lSEQ)
+			f.Intrinsic.String.LPad(v.Local.lSEQ,"0",6,v.Local.sSEQ)
+		f.Intrinsic.Control.Else
+			v.Local.sSEQ.Set("000001")
+		f.Intrinsic.Control.EndIf
+		'Insert into Project XREF
+		v.Local.sInvoice.Set(v.DataTable.dtHD(0).INVOICE!FIELDVALTRIM)
+		v.Local.sSONm.Set(v.DataTable.dtHD(0).ORDER_NO!FIELDVALTRIM)
+		v.Local.sSOLn.Set(v.DataTable.dtLN(v.Local.j).ORDER_LINE!FIELDVALTRIM)
+		v.Local.sSOSq.Set(v.DataTable.dtLN(v.Local.j).ORDER_SUFFIX!FIELDVALTRIM)
+		v.Local.sProj.Set(v.DataTable.dtHD(0).USER_3!FIELDVALTRIM)
+		v.Local.sPhse.Set(v.DataTable.dtLN(v.Local.j).USER_2!FIELDVALTRIM)
+		v.Local.SSQL.Set("INSERT INTO PROJECT_XREF (PROJECT,PHASE,F_GROUP,SEQ,TYPE,IVC,SO,SO_SEQ,SO_LINE,BATCH,WO_SEQ) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')")
+		F.Intrinsic.STRING.Build(v.Local.SSQL,v.Local.sProj,v.Local.sPhse,"SALES",v.Local.sSEQ,"I",v.Local.sInvoice,v.Local.sSONm,v.Local.sSOSq,v.Local.sSOLn,v.Args.sBatch,"000000",V.Local.SSQL)
+		F.ODBC.CONNECTION!CON.EXECUTE(V.Local.SSQL)
+	f.Intrinsic.Control.Next(v.Local.j)
+f.Intrinsic.Control.Next(v.Local.i)	
+f.Intrinsic.UI.Msgbox("Sync to history successfully completed.")
+F.ODBC.Connection!CON.Close
+F.Intrinsic.Control.End
+Program.Sub.updateProj.End
+
+Program.Sub.Comments.Start
+${$0$}$$}$SUPERVSR$}$12-Jul-17 8:45:10 AM$}$True
+Program.Sub.Comments.End
