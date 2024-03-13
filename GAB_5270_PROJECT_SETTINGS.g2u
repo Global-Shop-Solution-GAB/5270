@@ -1,0 +1,365 @@
+Program.Sub.ScreenSU.Start
+Gui.frmContract..Create(BaseForm)
+Gui.frmContract..Caption("Project Settings for Claims/Retention Management")
+Gui.frmContract..Size(18540,9015)
+Gui.frmContract..MinX(0)
+Gui.frmContract..MinY(0)
+Gui.frmContract..Position(0,0)
+Gui.frmContract..BackColor(-2147483633)
+Gui.frmContract..MousePointer(0)
+Gui.frmContract..Event(UnLoad,frmContract_UnLoad)
+Gui.frmContract..AlwaysOnTop(False)
+Gui.frmContract..FontName("Tahoma")
+Gui.frmContract..FontSize(8.25)
+Gui.frmContract..ControlBox(True)
+Gui.frmContract..MaxButton(True)
+Gui.frmContract..MinButton(True)
+Gui.frmContract..Moveable(True)
+Gui.frmContract..Sizeable(True)
+Gui.frmContract..ShowInTaskBar(True)
+Gui.frmContract..TitleBar(True)
+Gui.frmContract.cmdBrowseSched.Create(Button)
+Gui.frmContract.cmdBrowseSched.Size(450,375)
+Gui.frmContract.cmdBrowseSched.Position(1455,345)
+Gui.frmContract.cmdBrowseSched.Caption("^")
+Gui.frmContract.cmdBrowseSched.Event(Click,cmdBrowseSched_Click)
+Gui.frmContract.cmdBrowseSched.Enabled(False)
+Gui.frmContract.cmdBrowseSched.Visible(True)
+Gui.frmContract.cmdBrowseSched.Zorder(0)
+Gui.frmContract.cmdBrowseSched.FontName("Tahoma")
+Gui.frmContract.cmdBrowseSched.FontSize(8.25)
+Gui.frmContract.txtRetnCode.Create(TextBox,"",True,1215,300,0,150,360,False,0,"Arial",8,-2147483643,1)
+Gui.frmContract.ddlDefects.Create(DropDownList)
+Gui.frmContract.ddlDefects.Size(3945,330)
+Gui.frmContract.ddlDefects.Position(2520,960)
+Gui.frmContract.ddlDefects.Enabled(True)
+Gui.frmContract.ddlDefects.Visible(True)
+Gui.frmContract.ddlDefects.Zorder(0)
+Gui.frmContract.ddlDefects.FontName("Tahoma")
+Gui.frmContract.ddlDefects.FontSize(8.25)
+Gui.frmContract.chkPracCompl.Create(CheckBox)
+Gui.frmContract.chkPracCompl.Size(1860,300)
+Gui.frmContract.chkPracCompl.Position(2520,60)
+Gui.frmContract.chkPracCompl.Caption("Practical Completion")
+Gui.frmContract.chkPracCompl.Enabled(True)
+Gui.frmContract.chkPracCompl.Visible(True)
+Gui.frmContract.chkPracCompl.Zorder(0)
+Gui.frmContract.chkPracCompl.FontName("Tahoma")
+Gui.frmContract.chkPracCompl.FontSize(8.25)
+Gui.frmContract.lbl1.Create(Label,"Defects Liability",True,3990,255,0,2505,765,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl1.BorderStyle(0)
+Gui.frmContract.cmdSave.Create(Button)
+Gui.frmContract.cmdSave.Size(855,375)
+Gui.frmContract.cmdSave.Position(75,8100)
+Gui.frmContract.cmdSave.Caption("Save")
+Gui.frmContract.cmdSave.Event(Click,cmdSave_Click)
+Gui.frmContract.cmdSave.Enabled(True)
+Gui.frmContract.cmdSave.Visible(True)
+Gui.frmContract.cmdSave.Zorder(0)
+Gui.frmContract.cmdSave.FontName("Tahoma")
+Gui.frmContract.cmdSave.FontSize(8.25)
+Gui.frmContract.dtpPracCompl.Create(DatePicker)
+Gui.frmContract.dtpPracCompl.Size(1935,285)
+Gui.frmContract.dtpPracCompl.Position(2520,405)
+Gui.frmContract.dtpPracCompl.Enabled(True)
+Gui.frmContract.dtpPracCompl.Visible(True)
+Gui.frmContract.dtpPracCompl.Zorder(0)
+Gui.frmContract.dtpPracCompl.CheckBox(False)
+Gui.frmContract.dtpPracCompl.FontName("Tahoma")
+Gui.frmContract.dtpPracCompl.FontSize(8.25)
+Gui.frmContract.lbl2.Create(Label,"Retention Schedule",True,1965,255,0,180,120,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl2.BorderStyle(0)
+Gui.frmContract.txtRelease1.Create(TextBox,"",True,945,300,0,6765,360,True,0,"Arial",8,-2147483643,1)
+Gui.frmContract.txtRelease2.Create(TextBox,"",True,960,300,0,6765,1020,True,0,"Arial",8,-2147483643,1)
+Gui.frmContract.lbl3.Create(Label,"Percent Release 1",True,1935,255,0,6735,135,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl3.BorderStyle(0)
+Gui.frmContract.lbl4.Create(Label,"Percent Release 2",True,1935,255,0,6735,810,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl4.BorderStyle(0)
+Gui.frmContract.lblOrderNo.Create(Label,"",False,15,210,0,6285,2100,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lblOrderNo.BorderStyle(0)
+Gui.frmContract.cmdRetnCodeMaint.Create(Button)
+Gui.frmContract.cmdRetnCodeMaint.Size(1860,375)
+Gui.frmContract.cmdRetnCodeMaint.Position(120,885)
+Gui.frmContract.cmdRetnCodeMaint.Caption("Retention Code Maint.")
+Gui.frmContract.cmdRetnCodeMaint.Event(Click,cmdRetnCodeMaint_Click)
+Gui.frmContract.cmdRetnCodeMaint.Enabled(False)
+Gui.frmContract.cmdRetnCodeMaint.Visible(True)
+Gui.frmContract.cmdRetnCodeMaint.Zorder(0)
+Gui.frmContract.cmdRetnCodeMaint.FontName("Tahoma")
+Gui.frmContract.cmdRetnCodeMaint.FontSize(8.25)
+Gui.frmContract.txtReferenceID.Create(TextBox,"",True,2340,300,0,8985,360,True,0,"Arial",8,-2147483643,1)
+Gui.frmContract.txtAttention.Create(TextBox,"",True,2325,300,0,8985,945,True,0,"Arial",8,-2147483643,1)
+Gui.frmContract.txtContractID.Create(TextBox,"",True,2325,300,0,8970,1590,True,0,"Arial",8,-2147483643,1)
+Gui.frmContract.lbl5.Create(Label,"Reference ID",True,1935,255,0,8970,150,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl5.BorderStyle(0)
+Gui.frmContract.lbl6.Create(Label,"Attention",True,1935,255,0,8970,750,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl6.BorderStyle(0)
+Gui.frmContract.lbl7.Create(Label,"Contract ID",True,1935,255,0,8985,1365,True,0,"Arial",8,-2147483633,0,0)
+Gui.frmContract.lbl7.BorderStyle(0)
+Gui.frmContract.gsgcTemplate.Create(GsGridControl)
+Gui.frmContract.gsgcTemplate.Enabled(True)
+Gui.frmContract.gsgcTemplate.Visible(True)
+Gui.frmContract.gsgcTemplate.Zorder(0)
+Gui.frmContract.gsgcTemplate.Size(18255,5865)
+Gui.frmContract.gsgcTemplate.Position(150,2175)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+f.Intrinsic.Control.Try
+	'Project Management Populate Screen
+	F.Intrinsic.Control.If(V.Caller.Hook,=,"40401")
+		v.Passed.000057.Set("Proj. Set")
+		v.Passed.000058.Set("New Claim")
+		v.Passed.000059.Set("Claim Hist")
+	f.Intrinsic.Control.Else
+		F.ODBC.Connection!CON.opencompanyconnection
+		F.Intrinsic.Control.CallSub(checkTables)
+		Gui.frmContract.ddlDefects.AddItem("1 month after practical completion","1")
+		Gui.frmContract.ddlDefects.AddItem("2 months after practical completion","2")
+		Gui.frmContract.ddlDefects.AddItem("3 months after practical completion","3")
+		Gui.frmContract.ddlDefects.AddItem("4 months after practical completion","4")
+		Gui.frmContract.ddlDefects.AddItem("5 months after practical completion","5")
+		Gui.frmContract.ddlDefects.AddItem("6 months after practical completion","6")
+		Gui.frmContract.ddlDefects.AddItem("7 months after practical completion","7")
+		Gui.frmContract.ddlDefects.AddItem("8 months after practical completion","8")
+		Gui.frmContract.ddlDefects.AddItem("9 months after practical completion","9")
+		Gui.frmContract.ddlDefects.AddItem("10 months after practical completion","10")
+		Gui.frmContract.ddlDefects.AddItem("11 months after practical completion","11")
+		Gui.frmContract.ddlDefects.AddItem("12 months after practical completion","12")
+		Gui.frmContract.ddlDefects.AddItem("13 months after practical completion","13")
+		Gui.frmContract.ddlDefects.AddItem("14 months after practical completion","14")
+		Gui.frmContract.ddlDefects.AddItem("15 months after practical completion","15")
+		Gui.frmContract.ddlDefects.AddItem("16 months after practical completion","16")
+		Gui.frmContract.ddlDefects.AddItem("17 months after practical completion","17")
+		Gui.frmContract.ddlDefects.AddItem("18 months after practical completion","18")
+		Gui.frmContract.ddlDefects.AddItem("19 months after practical completion","19")
+		Gui.frmContract.ddlDefects.AddItem("20 months after practical completion","20")
+		Gui.frmContract.ddlDefects.AddItem("21 months after practical completion","21")
+		Gui.frmContract.ddlDefects.AddItem("22 months after practical completion","22")
+		Gui.frmContract.ddlDefects.AddItem("23 months after practical completion","23")
+		Gui.frmContract.ddlDefects.AddItem("24 months after practical completion","24")
+		gui.frmContract.lblOrderNo.Caption(v.Passed.000002)
+		v.Local.ssql.Declare(string,"SELECT * FROM GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'")
+		f.Intrinsic.String.Build(v.Local.ssql,v.Passed.000002,v.Local.ssql)
+		f.ODBC.Connection!con.OpenRecordsetRW("rsInit",v.Local.ssql)
+		f.Intrinsic.Control.If(v.ODBC.con!rsInit.EOF,=,false)
+			gui.frmContract.txtRetnCode.Text(v.ODBC.con!rsInit.FieldVal!RETN_CODE)
+			gui.frmContract.dtpPracCompl.Value(v.ODBC.con!rsInit.FieldVal!PRACTICAL_COMPL_DT)
+			gui.frmContract.chkPracCompl.Value(v.ODBC.con!rsInit.FieldVal!PRACTICAL_COMPL)
+			gui.frmContract.txtRelease1.Text(v.ODBC.con!rsInit.FieldVal!RELEASE_1)
+			gui.frmContract.txtRelease2.Text(v.ODBC.con!rsInit.FieldVal!RELEASE_2)
+			gui.frmContract.ddlDefects.text(v.ODBC.con!rsInit.FieldValTrim!DEFECT_LIABILITY)
+			gui.frmContract.txtReferenceID.text(v.ODBC.con!rsInit.FieldValTrim!REFERENCE_ID)
+			gui.frmContract.txtAttention.text(v.ODBC.con!rsInit.FieldValTrim!ATTENTION)
+			gui.frmContract.txtContractID.text(v.ODBC.con!rsInit.FieldValTrim!CONTRACT_ID)
+		f.Intrinsic.Control.EndIf
+		F.ODBC.con!rsInit.Close
+		
+		f.Intrinsic.string.Build("SELECT SCHEDULE_CODE, SITE_INSTRUCTION, DESCRIPTION, SCHEDULE_RATE, POSITION, PL, ID FROM GAB_5270_TABLE_SETUP WHERE PROJECT='{0}'",v.Passed.000002,v.Local.ssql)
+		f.Data.DataTable.CreateFromSQL("dtT","con",v.Local.ssql,true)
+		F.Data.DataTable.AddColumn("dtT","Project","String",v.Passed.000002)
+		gui.frmContract.gsgcTemplate.DataSource("dtT")
+		f.Intrinsic.Control.CallSub(setColumnProperties)
+		gui.frmContract..Show
+		GUI.frmContract..SetFocus(1)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(form_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.checkTables.Start
+f.Intrinsic.Control.Try
+	v.Local.bExists.Declare
+	f.Intrinsic.UI.InvokeWaitDialog("Table Checking, please wait.")
+	f.ODBC.Connection!con.tableExists("GAB_5270_TABLE_SETUP",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_TABLE_SETUP  (PROJECT VARCHAR(50), POSITION INTEGER,SCHEDULE_CODE VARCHAR(100),SITE_INSTRUCTION VARCHAR(255),DESCRIPTION VARCHAR(255),SCHEDULE_RATE DOUBLE,PL VARCHAR(2),ID IDENTITY DEFAULT '0' CONSTRAINT UK_ID UNIQUE USING 0 ); ")
+		F.ODBC.Connection!CON.Execute("ALTER TABLE GAB_5270_TABLE_SETUP IN DICTIONARY ADD CONSTRAINT PK_ID PRIMARY KEY  ( ID ) USING 0;")
+	f.Intrinsic.Control.EndIf
+	
+	f.ODBC.Connection!con.tableExists("GAB_5270_CLAIM_PRINT",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_CLAIM_PRINT (PROJECT CHAR(7),CLAIMNO INTEGER,REFERENCE_ID CHAR(30),ATTENTION CHAR(50),CONTACT CHAR(255), CONTRACT_ID CHAR(50),SCHEDULE_CODE CHAR(30),SITE_INSTRUCTION CHAR(30),DESCRIPTION CHAR(30),SCHEDULE_RATE DOUBLE,VALUE_CLAIM DOUBLE,PHASE CHAR(4),POSITION INTEGER,PREV_CLAIM DOUBLE,RETENTION DOUBLE,RETENTION_PREV DOUBLE,USERID CHAR(8),CUSTOMER CHAR(6) )")
+	f.Intrinsic.Control.EndIf
+	
+	f.ODBC.Connection!con.tableExists("GAB_5270_CLAIMH",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_CLAIMH (PROJECT CHAR(7),REFERENCE_ID CHAR(30),CLIENT CHAR(6),ATTENTION CHAR(50),CONTACT CHAR(255),CONTRACT_ID CHAR(50),CLAIMNO INTEGER,CREATEDATE DATE DEFAULT NOW(),INVOICE CHAR(6) )")
+	f.Intrinsic.Control.EndIf
+	
+	f.ODBC.Connection!con.tableExists("GAB_5270_CLAIML",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_CLAIML (PROJECT CHAR(7),SCHEDULE_CODE CHAR(30),SITE_INSTRUCTION CHAR(30),DESCRIPTION CHAR(30),SCHEDULE_RATE DOUBLE,VALUE_CLAIM DOUBLE,PHASE CHAR(4),POSITION INTEGER,CLAIMNO INTEGER,PREVCALCNOTE DOUBLE,PL CHAR(2) )")
+	f.Intrinsic.Control.EndIf
+	
+	f.ODBC.Connection!con.tableExists("GAB_5270_PROJ_SET",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_PROJ_SET (RETN_CODE CHAR(5), PROJECT_NUMBER CHAR(7),PRACTICAL_COMPL CHAR(1),PRACTICAL_COMPL_DT DATE,DEFECT_LIABILITY CHAR(120),RELEASE_1 DOUBLE,RELEASE_2 DOUBLE,REFERENCE_ID CHAR(50),ATTENTION CHAR(50),CONTRACT_ID CHAR(50) )")
+	f.Intrinsic.Control.EndIf
+	
+	f.ODBC.Connection!con.tableExists("GAB_5270_RETENTIONS",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_RETENTIONS(PROJECT CHAR(7),CLAIMNO INTEGER,RETENTION DOUBLE );")
+	f.Intrinsic.Control.EndIf
+	
+	f.ODBC.Connection!con.tableExists("GAB_5270_RETN_CODE",v.Local.bExists)
+	f.Intrinsic.Control.If(v.Local.bExists,=,False)
+		f.ODBC.Connection!con.execute("CREATE TABLE GAB_5270_RETN_CODE (RetentionCode VARCHAR(5) NOT NULL, Description CHAR(50), ClaimsCutoff1 NUMERIC(19,4), RetentionPercent1 NUMERIC(8,4), ClaimsCutoff2 NUMERIC(19,4), RetentionPercent2 NUMERIC(8,4),ClaimsCutoff3 NUMERIC(19,4),RetentionPercent3 NUMERIC(8,4),RetentionType SMALLINT,OriginalContractInc SMALLINT,AppScopeChangesInc SMALLINT,IncreasedCostsIncl SMALLINT,OtherCostsIncluded SMALLINT,RechargesIncluded SMALLINT,ContractContInc SMALLINT,Details VARCHAR(255) );")
+	f.Intrinsic.Control.EndIf
+	f.Intrinsic.UI.CloseWaitDialog
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(form_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.checkTables.End
+
+Program.Sub.setColumnProperties.Start
+f.Intrinsic.Control.Try
+	V.Local.sScheduleCodes.Declare
+	v.Local.sScheduleCodes.Set("MAIN CONTRACT*!*ADDITIONS*!*DELETIONS")
+	gui.frmContract.gsgcTemplate.AddGridviewFromDatatable("gvT","dtT")
+	
+	gui.frmContract.gsgcTemplate.columnEdit("gvT","SCHEDULE_CODE","Dropdownlist",v.local.sScheduleCodes)
+
+	gui.frmContract.gsgcTemplate.SetGridviewProperty("gvT","AllowAddRows",true)
+	gui.frmContract.gsgcTemplate.SetGridviewProperty("gvT","AllowDeleteRows",true)
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_CODE","Caption","Schedule Code")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SITE_INSTRUCTION","Caption","Site Instruction")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","DESCRIPTION","Caption","Extra Description")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","Caption","Schedule Rate")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","Caption","PL")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_CODE","ReadOnly","FALSE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SITE_INSTRUCTION","ReadOnly","FALSE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","DESCRIPTION","ReadOnly","FALSE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","ReadOnly","FALSE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","ReadOnly","FALSE")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_CODE","AllowEdit","TRUE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SITE_INSTRUCTION","AllowEdit","TRUE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","DESCRIPTION","AllowEdit","TRUE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","AllowEdit","TRUE")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","AllowEdit","True")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_CODE","HeaderFontBold","True")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SITE_INSTRUCTION","HeaderFontBold","True")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","DESCRIPTION","HeaderFontBold","True")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","HeaderFontBold","True")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","HeaderFontBold","True")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","HeaderHAlignment","far")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","HeaderHAlignment","Center")
+	
+	Gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","CellHAlignment","Right")
+	Gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","CellHAlignment","Left")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","SCHEDULE_RATE","DisplayCustomNumeric","###,###,###,###.00")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PL","Width","30")
+	
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","PROJECT","Visible","False")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","POSITION","Visible","False")
+	gui.frmContract.gsgcTemplate.SetColumnProperty("gvT","ID","Visible","False")
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(form_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.setColumnProperties.End
+
+
+Program.Sub.cmdBrowseSched_Click.Start
+'V.Local.sRet.Declare(String)
+'V.Local.sTitles.Declare(String)
+'V.Local.iWidths.Declare(String)
+'V.Local.stemp.Declare(String)
+
+'f.Intrinsic.UI.SetBrowserHotTypeAhead(true)
+
+'F.intrinsic.string.split("Retention Code*!*Description","*!*",Variable.local.sTitles)
+'F.intrinsic.string.split("2000*!*3000","*!*",Variable.local.iWidths)
+
+'V.Local.ssql.Declare(String)
+'V.Local.ssql.set("SELECT RetentionCode, Description FROM GAB_5270_RETN_CODE")
+
+'F.intrinsic.ui.browser("Select a Code",con,v.Local.ssql,Variable.local.sTitles,Variable.local.iWidths,Variable.local.sRet)
+
+'F.intrinsic.control.if(Variable.local.sRet,"=","***CANCEL***")
+'F.intrinsic.control.else
+'  	F.intrinsic.string.split(Variable.local.sRet,"*!*",Variable.local.sRet)
+'	gui.frmContract.txtRetnCode.Text(v.Local.sRet(0))
+'F.Intrinsic.Control.endif
+Program.Sub.cmdBrowseSched_Click.End
+
+Program.Sub.Form_UnLoad.Start
+f.ODBC.Connection!con.Close
+f.Intrinsic.Control.End
+Program.Sub.Form_UnLoad.End
+
+Program.Sub.cmdSave_Click.Start
+f.Intrinsic.Control.If(v.Screen.frmContract!txtRelease1.Text,=,"","or",v.Screen.frmContract!txtRelease2.Text,=,"")
+	f.Intrinsic.UI.Msgbox("Retention Release Missing, please key in.")
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+
+v.Local.ssql.Declare(string,"SELECT * FROM GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'")
+f.Intrinsic.String.Build(v.Local.ssql,v.Screen.frmContract!lblOrderNo.Caption,v.Local.ssql)
+f.ODBC.Connection!con.OpenRecordsetRW("rs",v.Local.ssql)
+f.Intrinsic.Control.If(v.ODBC.con!rs.EOF,=,true)
+	f.ODBC.con!rs.AddNew
+	f.ODBC.con!rs.Set!RETN_CODE(v.Screen.frmContract!txtRetnCode.Text)
+	f.ODBC.con!rs.Set!PROJECT_NUMBER(V.Screen.frmContract!lblOrderNo.Caption)
+	f.ODBC.con!rs.Set!PRACTICAL_COMPL(V.Screen.frmContract!chkPracCompl.Value)
+	f.ODBC.con!rs.Set!PRACTICAL_COMPL_DT(V.Screen.frmContract!dtpPracCompl.Value)
+	f.ODBC.con!rs.set!DEFECT_LIABILITY(V.Screen.frmContract!ddlDefects.Text)
+	f.ODBC.con!rs.Set!RELEASE_1(v.Screen.frmContract!txtRelease1.Text)
+	f.ODBC.con!rs.Set!RELEASE_2(v.Screen.frmContract!txtRelease2.Text)
+	f.ODBC.con!rs.Set!REFERENCE_ID(v.Screen.frmContract!txtReferenceID.Text)
+	f.ODBC.con!rs.Set!ATTENTION(v.Screen.frmContract!txtAttention.Text)
+	f.ODBC.con!rs.Set!CONTRACT_ID(v.Screen.frmContract!txtContractID.Text)
+	f.ODBC.con!rs.MoveNext
+f.Intrinsic.Control.Else
+	f.ODBC.con!rs.Set!RETN_CODE(v.Screen.frmContract!txtRetnCode.Text)
+	f.ODBC.con!rs.Set!PROJECT_NUMBER(V.Screen.frmContract!lblOrderNo.Caption)
+	f.ODBC.con!rs.Set!PRACTICAL_COMPL(V.Screen.frmContract!chkPracCompl.Value)
+	f.ODBC.con!rs.Set!PRACTICAL_COMPL_DT(V.Screen.frmContract!dtpPracCompl.Value)
+	f.ODBC.con!rs.set!DEFECT_LIABILITY(V.Screen.frmContract!ddlDefects.text)
+	f.ODBC.con!rs.Set!RELEASE_1(v.Screen.frmContract!txtRelease1.Text)
+	f.ODBC.con!rs.Set!RELEASE_2(v.Screen.frmContract!txtRelease2.Text)
+	f.ODBC.con!rs.Set!REFERENCE_ID(v.Screen.frmContract!txtReferenceID.Text)
+	f.ODBC.con!rs.Set!ATTENTION(v.Screen.frmContract!txtAttention.Text)
+	f.ODBC.con!rs.Set!CONTRACT_ID(v.Screen.frmContract!txtContractID.Text)
+	f.ODBC.con!rs.Update
+f.Intrinsic.Control.EndIf
+f.ODBC.con!rs.Close
+
+f.Data.DataTable.SaveToDB("dtT","con","GAB_5270_TABLE_SETUP","ID",7)
+
+f.Intrinsic.UI.Msgbox("Successfully Updated")
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.frmContract_UnLoad.Start
+f.ODBC.Connection!con.Close
+f.Intrinsic.Control.End
+
+Program.Sub.frmContract_UnLoad.End
+
+Program.Sub.cmdRetnCodeMaint_Click.Start
+'v.Local.sfilepath.Declare(string)
+'v.Local.lID.Declare(long)
+'f.Intrinsic.String.Concat(v.Caller.GasDir,"\GAB_5270_RETN_CODES_MAINT.g2u",v.Local.sfilepath)
+'f.Global.General.CallAsyncGAS(v.Local.sfilepath,v.Local.lID)
+Program.Sub.cmdRetnCodeMaint_Click.End
+
+Program.Sub.Comments.Start
+${$0$}$$}$SUPERVSR$}$21/03/2017 1:34:11 p.m.$}$False
+${$5$}$2.0.0.0$}$2
+${$6$}$Ryan$}$20201016175439023$}$zT7b+sV1eISPUtInNavz/hSFWiol/4DuywBjag0Gz9cFZdLJIFHeomh2wMz/5ifbnJWCdfOwsBI=
+Program.Sub.Comments.End
+
+Program.Sub.Main.Start
