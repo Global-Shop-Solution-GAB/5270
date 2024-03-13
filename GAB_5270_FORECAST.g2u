@@ -1,0 +1,492 @@
+Program.Sub.ScreenSU.Start
+Gui.frmForecast..Create
+Gui.frmForecast..Caption("Revenue Forecast")
+Gui.frmForecast..Size(14250,9675)
+Gui.frmForecast..MinX(0)
+Gui.frmForecast..MinY(0)
+Gui.frmForecast..Position(0,0)
+Gui.frmForecast..BackColor(-2147483633)
+Gui.frmForecast..MousePointer(0)
+Gui.frmForecast..Event(UnLoad,frmForecast_UnLoad)
+Gui.frmForecast.gsgcConfirmed.Create(GsGridControl)
+Gui.frmForecast.gsgcConfirmed.Size(13875,3495)
+Gui.frmForecast.gsgcConfirmed.Position(75,1380)
+Gui.frmForecast.gsgcConfirmed.Event(CellValueChanged,gsgcConfirmed_CellValueChanged)
+Gui.frmForecast.gsgcPotential.Create(GsGridControl)
+Gui.frmForecast.gsgcPotential.Size(13875,3975)
+Gui.frmForecast.gsgcPotential.Position(75,4935)
+Gui.frmForecast.gsgcPotential.Event(RowCellClick,gsgcPotential_RowCellClick)
+Gui.frmForecast.gsgcPotential.Event(CellValueChanged,gsgcPotential_CellValueChanged)
+Gui.frmForecast.fraParam.Create(Frame)
+Gui.frmForecast.fraParam.Size(3660,1320)
+Gui.frmForecast.fraParam.Position(75,45)
+Gui.frmForecast.fraParam.Caption("Parameters")
+Gui.frmForecast.dtpStart.Create(DatePicker)
+Gui.frmForecast.dtpStart.Size(1935,285)
+Gui.frmForecast.dtpStart.Position(105,390)
+Gui.frmForecast.dtpStart.Parent("fraParam")
+Gui.frmForecast.dtpEnd.Create(DatePicker)
+Gui.frmForecast.dtpEnd.Size(1935,285)
+Gui.frmForecast.dtpEnd.Position(105,945)
+Gui.frmForecast.dtpEnd.Parent("fraParam")
+Gui.frmForecast.cmdRefresh.Create(Button)
+Gui.frmForecast.cmdRefresh.Size(1245,375)
+Gui.frmForecast.cmdRefresh.Position(2265,600)
+Gui.frmForecast.cmdRefresh.Caption("REFRESH")
+Gui.frmForecast.cmdRefresh.Event(Click,cmdRefresh_Click)
+Gui.frmForecast.cmdRefresh.Parent("fraParam")
+Gui.frmForecast.lblTo.Create(Label,"To",True,1395,210,0,120,795,True,0,"Arial",8,-2147483633,0)
+Gui.frmForecast.lblTo.Parent("fraParam")
+Gui.frmForecast.lblFrom.Create(Label,"From",True,1275,225,0,120,225,True,0,"Arial",8,-2147483633,0)
+Gui.frmForecast.lblFrom.Parent("fraParam")
+Gui.frmForecast.gsgcForecast.Create(GsGridControl)
+Gui.frmForecast.gsgcForecast.Size(13875,1365)
+Gui.frmForecast.gsgcForecast.Position(75,4125)
+Gui.frmForecast.gsgcForecast.Visible(False)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.ODBC.Connection!CON.opencompanyconnection
+v.Local.dDtBeg.Declare(date)
+v.Local.dDtEnd.Declare(date)
+f.Intrinsic.Date.DateAdd("D",-548,v.Ambient.Date,v.Local.dDtBeg)
+f.Intrinsic.Date.DateAdd("D",1095,v.Ambient.Date,v.Local.dDtEnd)
+F.Intrinsic.Control.CallSub(loadData,"dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd)
+f.Intrinsic.Control.CallSub(formatAll,"dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd)
+f.Intrinsic.Control.CallSub(setValues,"sGrCtr","gsgcPotential","sGridv","gvOth","sDataT","dtOth","dFinal",v.Local.dDtEnd)
+f.Intrinsic.Control.CallSub(setValues,"sGrCtr","gsgcConfirmed","sGridv","gvWon","sDataT","dtWon","dFinal",v.Local.dDtEnd)
+
+f.Intrinsic.Control.CallSub(SetContextMenus)
+
+gui.frmForecast.dtpStart.Value(v.Local.dDtBeg)
+gui.frmForecast.dtpEnd.Value(v.Local.dDtEnd)
+gui.frmForecast.cmdSave.anchor(6)
+gui.frmForecast..Show
+Program.Sub.Main.End
+
+Program.Sub.setValues.Start
+v.Local.i.Declare(long)
+v.Local.j.Declare(long)
+v.Local.ssql.Declare(string)
+v.Local.sMonth.Declare(string)
+v.Local.sYears.Declare(string)
+v.Local.sGrCtr.Declare(string)
+v.Local.sGridV.Declare(string)
+v.Local.sDataT.Declare(string)
+v.Local.sFormt.Declare(string)
+v.Local.sEquat.Declare(string)
+v.Local.sRowSt.Declare(string)
+v.Local.fForec.Declare(float)
+v.Local.fDivFr.Declare(float)
+v.Local.fRet.Declare(Float)
+v.Local.dDtBeg.Declare(date)
+v.Local.dDtEnd.Declare(date)
+v.Local.dFinal.Declare(date)
+v.Local.lDiffr.Declare(long)
+
+f.Intrinsic.Date.BeginningOfMonth(v.args.dFinal,v.Local.dFinal)
+f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.[v.Args.sDataT].RowCount--,1)
+	v.Local.sRowSt.Set(v.DataTable.[v.Args.sDataT](v.Local.i).RowState)
+	f.Intrinsic.Control.If(v.Local.sRowSt,<>,8)
+		v.Local.sGrCtr.Set(v.Args.sGrCtr)
+		v.Local.sGridV.Set(v.Args.sGridV)
+		v.Local.sDataT.Set(v.Args.sDataT)
+		v.Local.dDtBeg.Set(v.DataTable.[v.Args.sDataT](v.Local.i).ORIG_START!FIELDVAL)
+		v.Local.dDtEnd.Set(v.DataTable.[v.Args.sDataT](v.Local.i).ORIG_END!FIELDVAL)
+		v.Local.fForec.Set(v.DataTable.[v.Args.sDataT](v.Local.i).Forecast!fieldval)
+		f.Intrinsic.Date.DateDiff("M",v.Local.dDtBeg,v.Local.dDtEnd,v.Local.lDiffr)
+		f.Intrinsic.Control.If(v.Local.lDiffr,<>,0)
+		f.Intrinsic.Control.AndIf(v.Local.fForec,<>,0)
+			f.Intrinsic.Math.Div(v.Local.fForec,v.Local.lDiffr,v.Local.fDivFr)
+			f.Intrinsic.Control.For(v.Local.j,0,v.Local.lDiffr,1)			
+				f.Intrinsic.Control.If(v.Local.dDtBeg,<,v.local.dFinal)
+					f.Intrinsic.String.Format(v.Local.dDtBeg,"YY",v.Local.sYears)
+					f.Intrinsic.String.Format(v.Local.dDtBeg,"mmm",v.Local.sMonth)				
+					f.Intrinsic.String.Concat(v.Local.sMonth,v.Local.sYears,v.Local.sFormt)
+					f.Data.DataTable.SetValue(v.Local.sDataT,v.Local.i,v.Local.sFormt,v.Local.fDivFr)
+					f.Intrinsic.Date.DateAdd("M",1,v.Local.dDtBeg,v.Local.dDtBeg)
+					f.Intrinsic.Control.If(v.Local.sDataT.Trim,=,"dtWon")
+						f.Intrinsic.String.Concat("Sum(",v.Local.sFormt,")",v.Local.sEquat)
+						f.Data.DataTable.Compute(v.Local.sDataT,v.Local.sEquat,"",v.local.fRet)
+						f.Data.DataTable.SetValue("dtFor",0,v.Local.sFormt,v.Local.fRet)
+					f.Intrinsic.Control.EndIf
+				f.Intrinsic.Control.EndIf
+			f.Intrinsic.Control.Next(v.Local.j)
+		f.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.i)
+
+f.Intrinsic.Control.If(v.Local.sDataT.Trim,=,"dtWon")
+	f.Data.DataTable.Merge("dtFor","dtWon",true,1)
+	gui.frmForecast.gsgcConfirmed.SetRowAppearance("gvWon",v.DataTable.dtWon.RowCount--,"FontBold","True")
+f.Intrinsic.Control.EndIf
+Program.Sub.setValues.End
+
+Program.Sub.loadData.Start
+v.Local.dDtBeg.Declare(date)
+v.Local.dDtEnd.Declare(date)
+v.Local.dDtBeg.Set(v.Args.dDtBeg)
+v.Local.dDtEnd.Set(v.Args.dDtEnd)
+
+'Datatable Won Projects
+f.Data.DataTable.CreateFromSQL("dtWon","con","SELECT '+' as 'Add', CAST(USER_2 as Float) as 'Percentage', PROJECT, DESCR, ORIG_START, ORIG_END, NAME_CUSTOMER, rtrim(user_1) as 'Status', CAST(USER_3 AS FLOAT) as 'Quoted', CAST(USER_4 AS FLOAT) as 'Forecast', 0 as 'Total', 0 as 'Balance' FROM V_PROJECT_MASTER LEFT JOIN V_CUSTOMER_MASTER ON V_CUSTOMER_MASTER.CUSTOMER = V_PROJECT_MASTER.CUSTOMER where UCASE(user_1)='WON'",true)
+f.Intrinsic.Control.CallSub(addDateColumns,"dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd,"sGrCtr","dtWon","gGSGCs","gsgcConfirmed","sGridV","gvWon")
+
+'Datatable Potentials
+f.Data.DataTable.CreateFromSQL("dtOth","con","SELECT '+' as 'Add', CAST(USER_2 as Float) as 'Percentage', PROJECT, DESCR, ORIG_START, ORIG_END, NAME_CUSTOMER, rtrim(user_1) as 'Status', CAST(USER_3 AS FLOAT) as 'Quoted', CAST(USER_4 AS FLOAT) as 'Forecast', 0 as 'Total', 0 as 'Balance' FROM V_PROJECT_MASTER LEFT JOIN V_CUSTOMER_MASTER ON V_CUSTOMER_MASTER.CUSTOMER = V_PROJECT_MASTER.CUSTOMER where UCASE(user_1)<>'WON' and user_1<>''",true)
+f.Intrinsic.Control.CallSub(addDateColumns,"dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd,"sGrCtr","dtOth","gGSGCs","gsgcPotential","sGridV","gvOth")
+
+'Datatable Forecast
+f.Data.DataTable.CreateFromSQL("dtFor","con","SELECT '+' as 'Add', CAST(USER_2 as Float) as 'Percentage', PROJECT, DESCR, ORIG_START, ORIG_END, '' as 'NAME_CUSTOMER', rtrim(user_1) as 'Status', CAST(USER_3 AS FLOAT) as 'Quoted', CAST(USER_4 AS FLOAT) as 'Forecast', 0 as 'Total', 0 as 'Balance' FROM V_PROJECT_MASTER WHERE PROJECT=''",true)
+f.Intrinsic.Control.CallSub(addDateColumns,"dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd,"sGrCtr","dtFor","gGSGCs","gsgcForecast","sGridV","gvFor")
+f.Data.DataTable.DeleteRow("dtFor")
+F.Data.DataTable.AddRow("dtFor","DESCR","TOTAL:")
+
+Program.Sub.loadData.End
+
+Program.Sub.addDateColumns.Start
+v.local.dDtBeg.Declare(date)
+v.Local.dDtEnd.Declare(date)
+v.Local.lDiffr.Declare(long)
+v.Local.sMonth.Declare(string)
+v.Local.sYears.Declare(string)
+v.Local.sFormt.Declare(string)
+v.Local.sForRt.Declare(string)
+v.Local.sGrCtr.Declare(string)
+v.Local.sGridV.Declare(string)
+v.Local.sGSGCs.Declare(string)
+v.Local.i.Declare(long)
+
+v.Local.dDtBeg.set(v.Args.dDtBeg)
+v.Local.dDtEnd.Set(v.Args.dDtEnd)
+v.Local.sGrCtr.Set(v.Args.sGrCtr)
+v.Local.sGridV.Set(v.Args.sGridV)
+v.local.sGSGCs.Set(v.Args.gGSGCs)
+f.Intrinsic.Date.DateDiff("M",v.Local.dDtBeg,v.Local.dDtEnd,v.Local.lDiffr)
+f.Intrinsic.control.For(v.Local.i,1,v.Local.lDiffr,1)
+	f.Intrinsic.String.Format(v.Local.dDtBeg,"mmm",v.Local.sMonth)
+	f.Intrinsic.String.Format(v.Local.dDtBeg,"YY",v.Local.sYears)
+	f.Intrinsic.String.Concat(v.Local.sMonth,v.Local.sYears,v.Local.sFormt)
+	f.Data.DataTable.AddColumn(v.Local.sGrCtr,v.Local.sFormt,"Float")
+	f.Intrinsic.Date.DateAdd("M",1,v.Local.dDtBeg,v.Local.dDtBeg)
+f.Intrinsic.Control.Next(v.Local.i)
+Program.Sub.addDateColumns.End
+
+Program.Sub.formatAll.Start
+v.Local.dDtBeg.Declare(string)
+v.Local.dDtEnd.Declare(string)
+v.Local.dDtBeg.Set(v.Args.dDtBeg)
+v.Local.dDtEnd.Set(v.Args.dDtEnd)
+gui.frmForecast.gsgcConfirmed.DataSource("dtWon")
+gui.frmForecast.gsgcConfirmed.AddGridviewFromDatatable("gvWon","dtWon")
+f.Intrinsic.Control.CallSub(formatGrids,"sGridV","gvWon","sGrCtr","gsgcConfirmed")
+f.Intrinsic.Control.CallSub(formatMonth,"sGridV","gvWon","sGrCtr","gsgcConfirmed","dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd)
+
+gui.frmForecast.gsgcPotential.DataSource("dtOth")
+gui.frmForecast.gsgcPotential.AddGridviewFromDatatable("gvOth","dtOth")
+f.Intrinsic.Control.CallSub(formatGrids,"sGridV","gvOth","sGrCtr","gsgcPotential")
+f.Intrinsic.Control.CallSub(formatMonth,"sGridV","gvOth","sGrCtr","gsgcPotential","dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd)
+
+gui.frmForecast.gsgcForecast.DataSource("dtFor")
+gui.frmForecast.gsgcForecast.AddGridviewFromDatatable("gvFor","dtFor")
+f.Intrinsic.Control.CallSub(formatGrids,"sGridV","gvFor","sGrCtr","gsgcForecast")
+f.Intrinsic.Control.CallSub(formatMonth,"sGridV","gvFor","sGrCtr","gsgcForecast","dDtBeg",v.Local.dDtBeg,"dDtEnd",v.Local.dDtEnd)
+Program.Sub.formatAll.End
+
+Program.Sub.formatGrids.Start
+V.Local.sGridV.Declare(string)
+v.Local.sGridV.Set(v.Args.sGridV)
+v.Local.sGrCtr.Declare(string)
+v.Local.sGrCtr.Set(v.Args.sGrCtr)
+v.Local.sStatus.Declare(string)
+v.Local.sStatus.Set("WON*!*NEGOTIATING*!*QUOTED")
+
+'Min Widths
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","MinWidth","10")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PROJECT","MinWidth","120")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"DESCR","MinWidth","150")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"NAME_CUSTOMER","MinWidth","120")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"QUOTED","MinWidth","75")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","MinWidth","50")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"TOTAL","MinWidth","75")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"BALANCE","MinWidth","75")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","MinWidth","75")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_START","MinWidth","75")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_END","MinWidth","75")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","MinWidth","20")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","Width","20")
+
+'Fixed Columns
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PROJECT","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"DESCR","Fixed","Left")
+'gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"NAME_CUSTOMER","Fixed","Left")
+'gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"QUOTED","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_START","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_END","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","Fixed","Left")
+'gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"TOTAL","Fixed","Left")
+'gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"BALANCE","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","Fixed","Left")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","Fixed","Left")
+
+'Captions
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_START","Caption","Start Date")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_END","Caption","End Date")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","Caption","% Confirmed")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PROJECT","Caption","Project No.")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"DESCR","Caption","Project Name")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"NAME_CUSTOMER","Caption","Main Contractor")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"QUOTED","Caption","Quoted")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","Caption","Forecast")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"TOTAL","Caption","Claimed")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"BALANCE","Caption","Balance")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","Caption","+")
+
+'Bold
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_START","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_END","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PROJECT","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"DESCR","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"NAME_CUSTOMER","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"QUOTED","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"TOTAL","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"BALANCE","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","HeaderFontBold","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","HeaderFontBold","True")
+
+'Allow Edit
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","AllowEdit","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","AllowEdit","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","AllowEdit","True")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PROJECT","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"DESCR","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"NAME_CUSTOMER","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"TOTAL","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"BALANCE","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"QUOTED","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_START","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_END","AllowEdit","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","AllowEdit","False")
+
+'Readonly
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","ReadOnly","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","ReadOnly","False")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","ReadOnly","False")
+
+'Drop Down List
+gui.frmForecast.[v.Local.sGrCtr].ColumnEdit(v.Local.sGridV,"STATUS","Dropdownlist",v.Local.sStatus)
+
+'Numeric Format
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","DisplayCustomNumeric","###,###,###,###.00")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"QUOTED","DisplayCustomNumeric","###,###,###,###.00")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","DisplayCustomNumeric","00")
+
+'Dates
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_START","DisplayCustomDatetime","d")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ORIG_END","DisplayCustomDatetime","d")
+
+'Cell Back Colour
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"PERCENTAGE","CellBackColor","LightYellow")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"FORECAST","CellBackColor","LightYellow")
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","CellBackColor","LightYellow")
+
+gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"STATUS","CellBackColor","LightYellow")
+
+f.Intrinsic.Control.If(v.Local.sGridV.Trim,=,"gvWon","or",v.Local.sGridV.Trim,=,"gvFor")
+	gui.frmForecast.[v.Local.sGrCtr].SetColumnProperty(v.Local.sGridV,"ADD","Visible","False")
+	gui.frmForecast.[v.Local.sGrCtr].anchor(13)
+f.Intrinsic.Control.Else
+	gui.frmForecast.[v.Local.sGrCtr].anchor(15)
+f.Intrinsic.Control.EndIf
+
+Program.Sub.formatGrids.End
+
+Program.Sub.formatMonth.Start
+v.local.dDtBeg.Declare(date)
+v.Local.dDtEnd.Declare(date)
+v.Local.lDiffr.Declare(long)
+v.Local.sMonth.Declare(string)
+v.Local.sYears.Declare(string)
+v.Local.sFormt.Declare(string)
+v.Local.sGrCtr.Declare(string)
+v.Local.sGridV.Declare(string)
+v.Local.i.Declare(long)
+
+v.Local.dDtBeg.set(v.Args.dDtBeg)
+v.Local.dDtEnd.Set(v.Args.dDtEnd)
+v.Local.sGrCtr.Set(v.Args.sGrCtr)
+v.Local.sGridV.Set(v.Args.sGridV)
+f.Intrinsic.Date.DateDiff("M",v.Local.dDtBeg,v.Local.dDtEnd,v.Local.lDiffr)
+f.Intrinsic.control.For(v.Local.i,1,v.Local.lDiffr,1)
+	f.Intrinsic.String.Format(v.Local.dDtBeg,"mmm",v.Local.sMonth)
+	f.Intrinsic.String.Format(v.Local.dDtBeg,"YY",v.Local.sYears)
+	f.Intrinsic.String.Concat(v.Local.sMonth,v.Local.sYears,v.Local.sFormt)
+	gui.frmForecast.[v.Local.sGrCtr].setcolumnproperty(v.Local.sGridV,v.Local.sFormt,"MinWidth","100")
+	gui.frmForecast.[v.Local.sGrCtr].setcolumnproperty(v.Local.sGridV,v.Local.sFormt,"HeaderFontBold","True")
+	gui.frmForecast.[v.Local.sGrCtr].setcolumnproperty(v.Local.sGridV,v.Local.sFormt,"DisplayCustomNumeric","###,###,###,###")
+	f.Intrinsic.Date.DateAdd("M",1,v.Local.dDtBeg,v.Local.dDtBeg)
+f.Intrinsic.Control.Next(v.Local.i)
+Program.Sub.formatMonth.End
+
+Program.Sub.SetContextMenus.Start
+F.Intrinsic.Control.Try
+	v.Local.sError.Declare
+	
+	gui.frmForecast..ContextMenuCreate("ctxFC")
+	GUI.frmForecast.gsgcConfirmed.ContextMenuAttach("ctxFC")
+	GUI.frmForecast..ContextMenuAddItem("ctxFC","Export",0,"Export")
+	gui.frmForecast..ContextMenuSetItemEventHandler("ctxFC","Export","MenuClickExport")
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	f.Intrinsic.Control.CallSub(unloadForm)
+F.Intrinsic.Control.EndTry
+Program.Sub.SetContextMenus.End
+
+Program.Sub.MenuClickExport.Start
+f.Intrinsic.Control.Try
+	v.Local.sError.Declare(string)
+	v.Local.sFileExport.Declare(string)
+	v.Local.sMsg.Declare(string)
+	v.Local.sTime.Declare(string)
+	v.Local.bExcel.Declare(Boolean)
+	v.Local.bFileLocked.Declare(boolean)
+
+	f.Intrinsic.String.Format(v.Ambient.Now,"YYYYMMDD HHNNSS",v.Local.sTime)
+	F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+	F.Intrinsic.Control.If(V.Local.bExcel)
+		F.Intrinsic.String.Build("{0}\GAB_5270_{1}_Export.xlsx",V.Caller.LocalGssTempDir,V.Local.sTime,V.Local.sFileExport)
+		F.Intrinsic.File.IsFileLocked(V.Local.sFileExport,V.Local.bFileLocked)
+		F.Intrinsic.Control.If(V.Local.bFileLocked)
+			F.Intrinsic.String.Build("File is already open. Please close and export again.{0}File: {1}",V.Ambient.NewLine,V.Local.sFileExport,V.Local.sMsg)
+			F.Intrinsic.UI.Msgbox(V.Local.sMsg,"File In Use")
+		F.Intrinsic.Control.Else
+			gui.frmForecast.gsgcConfirmed.Export(v.Local.sFileExport,"xlsx")
+			F.Intrinsic.Task.ShellExec(0,"",V.Local.sFileExport,"","",1)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("{0}\GAB_5270_{1}_Export.csv",V.Caller.LocalGssTempDir,V.Local.sTime,V.Local.sFileExport)
+		F.Intrinsic.File.IsFileLocked(V.Local.sFileExport,V.Local.bFileLocked)
+		F.Intrinsic.Control.If(V.Local.bFileLocked)
+			F.Intrinsic.String.Build("File is already open. Please close and export again.{0}File: {1}",V.Ambient.NewLine,V.Local.sFileExport,V.Local.sMsg)
+			F.Intrinsic.UI.Msgbox(V.Local.sMsg,"File In Use")
+		F.Intrinsic.Control.Else
+			gui.frmForecast.gsgcConfirmed.Export(v.Local.sFileExport,"csv")
+		F.Intrinsic.Control.EndIf
+		F.Intrinsic.Task.ShellExec(0,"",V.Local.sFileExport,"","",1)
+	F.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	f.Intrinsic.Control.CallSub(unloadForm)
+f.Intrinsic.Control.EndTry
+Program.Sub.MenuClickExport.End
+
+Program.Sub.gsgcPotential_RowCellClick.Start
+v.Local.sProj.Declare(string)
+v.Local.sDesc.Declare(string)
+v.Local.sYear.Declare(string)
+v.Local.sMnth.Declare(string)
+v.Local.sName.Declare(string)
+v.Local.sStat.Declare(string)
+v.Local.sForm.Declare(string)
+v.Local.fPerc.Declare(float)
+v.Local.fQuot.Declare(float)
+v.Local.fFore.Declare(float)
+v.Local.fTotl.Declare(float)
+v.Local.dBegn.Declare(date)
+v.Local.dEndn.Declare(date)
+v.Local.dFinl.Declare(date)
+v.Local.lDiff.Declare(long)
+v.Local.j.Declare(long)
+
+v.local.dFinl.Set(v.Screen.frmForecast!dtpEnd.value)
+f.Intrinsic.Date.BeginningOfMonth(v.Local.dFinl,v.Local.dFinl)
+
+F.Intrinsic.Control.SelectCase(V.Args.Column)
+	F.Intrinsic.Control.Case("Add")
+		gui.frmForecast.gsgcConfirmed.SetRowAppearance("gvWon",v.DataTable.dtWon.RowCount--,"FontBold","False")
+		f.Data.DataTable.DeleteRow("dtWon",v.DataTable.dtWon.RowCount--)
+		v.Local.fPerc.Set(v.DataTable.dtOth(v.Args.rowindex).Percentage!fieldval)
+		v.Local.fQuot.Set(v.DataTable.dtOth(v.Args.rowindex).Quoted!fieldval)
+		v.Local.fFore.Set(v.DataTable.dtOth(v.Args.rowindex).Forecast!fieldval)
+		v.Local.sProj.Set(v.DataTable.dtOth(v.Args.rowindex).Project!fieldval)
+		v.Local.sDesc.Set(v.DataTable.dtOth(v.Args.rowindex).Descr!fieldval)
+		v.Local.sName.Set(v.DataTable.dtOth(v.Args.rowindex).NAME_CUSTOMER!fieldval)
+		v.Local.sStat.Set(v.DataTable.dtOth(v.Args.rowindex).Status!fieldval)
+		v.Local.dBegn.Set(v.DataTable.dtOth(v.Args.rowindex).Orig_start!fieldval)
+		v.Local.dEndn.Set(v.DataTable.dtOth(v.Args.rowindex).Orig_end!fieldval)
+		f.Data.DataTable.AddRow("dtWon","Percentage",v.Local.fPerc,"Project",v.Local.sProj,"Quoted",v.Local.fQuot,"Forecast",v.Local.fFore,"DESCR",v.Local.sDesc,"NAME_CUSTOMER",v.Local.sName,"Status",v.Local.sStat,"ORIG_START",v.Local.dBegn,"Orig_END",v.Local.dEndn)
+		f.Data.DataTable.DeleteRow("dtOth",v.Args.rowindex)
+		f.Intrinsic.Date.DateDiff("M",v.Local.dBegn,v.Local.dEndn,v.Local.lDiff)
+		f.Intrinsic.Control.If(v.Local.lDiff,<>,0)
+		f.Intrinsic.Control.AndIf(v.Local.fFore,<>,0)
+			f.Intrinsic.Math.Div(v.Local.fFore,v.Local.lDiff,v.Local.fTotl)
+			f.Intrinsic.Control.For(v.Local.j,0,v.Local.lDiff,1)			
+				f.Intrinsic.Control.If(v.Local.dBegn,<,v.local.dFinl)
+					f.Intrinsic.String.Format(v.Local.dBegn,"YY",v.Local.sYear)
+					f.Intrinsic.String.Format(v.Local.dBegn,"mmm",v.Local.sMnth)				
+					f.Intrinsic.String.Concat(v.Local.sMnth,v.Local.sYear,v.Local.sForm)
+					f.Data.DataTable.SetValue("dtWon",v.DataTable.dtWon.RowCount--,v.Local.sForm,v.Local.fTotl)
+					f.Intrinsic.Date.DateAdd("M",1,v.Local.dBegn,v.Local.dBegn)
+				f.Intrinsic.Control.EndIf
+			f.Intrinsic.Control.Next(v.Local.j)
+		f.Intrinsic.Control.EndIf
+		f.Intrinsic.Control.CallSub(setValues,"sGrCtr","gsgcConfirmed","sGridv","gvWon","sDataT","dtWon","dFinal",v.Local.dEndn)
+		
+		
+Program.Sub.gsgcPotential_RowCellClick.End
+
+Program.Sub.gsgcPotential_CellValueChanged.Start
+f.Intrinsic.Control.Try
+	v.Local.ssql.Declare
+	f.Intrinsic.Control.SelectCase(v.Args.column)
+		f.Intrinsic.Control.Case("Status")
+			f.Intrinsic.String.Build("UPDATE PROJECT_MASTER SET USER_1='{0}' WHERE PROJECT='{1}'",V.DataTable.dtOth(V.Args.ROWINDEX).Status!fieldvaltrim,v.DataTable.dtOth(V.Args.ROWINDEX).Project!fieldvaltrim,v.Local.ssql)
+			F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+		f.Intrinsic.Control.Case("Percentage")
+			f.Intrinsic.String.Build("UPDATE PROJECT_MASTER SET USER_2='{0}' WHERE PROJECT='{1}'",V.DataTable.dtOth(V.Args.ROWINDEX).Percentage!fieldvaltrim,v.DataTable.dtOth(V.Args.ROWINDEX).Project!fieldvaltrim,v.Local.ssql)
+			F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+		f.Intrinsic.Control.Case("Forecast")
+			f.Intrinsic.String.Build("UPDATE PROJECT_MASTER SET USER_4='{0}' WHERE PROJECT='{1}'",V.DataTable.dtOth(V.Args.ROWINDEX).Forecast!fieldvaltrim,v.DataTable.dtOth(V.Args.ROWINDEX).Project!fieldvaltrim,v.Local.ssql)
+			F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+f.Intrinsic.Control.EndTry
+Program.Sub.gsgcPotential_CellValueChanged.End
+
+Program.Sub.gsgcConfirmed_CellValueChanged.Start
+f.Intrinsic.Control.Try
+	v.Local.ssql.Declare
+	f.Intrinsic.Control.SelectCase(v.Args.column)
+		f.Intrinsic.Control.Case("Status")
+			f.Intrinsic.String.Build("UPDATE PROJECT_MASTER SET USER_1='{0}' WHERE PROJECT='{1}'",V.DataTable.dtWon(V.Args.ROWINDEX).Status!fieldvaltrim,v.DataTable.dtWon(V.Args.ROWINDEX).Project!fieldvaltrim,v.Local.ssql)
+			F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+		f.Intrinsic.Control.Case("Percentage")
+			f.Intrinsic.String.Build("UPDATE PROJECT_MASTER SET USER_2='{0}' WHERE PROJECT='{1}'",V.DataTable.dtWon(V.Args.ROWINDEX).Percentage!fieldvaltrim,v.DataTable.dtWon(V.Args.ROWINDEX).Project!fieldvaltrim,v.Local.ssql)
+			F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+		f.Intrinsic.Control.Case("Forecast")
+			f.Intrinsic.String.Build("UPDATE PROJECT_MASTER SET USER_4='{0}' WHERE PROJECT='{1}'",V.DataTable.dtWon(V.Args.ROWINDEX).Forecast!fieldvaltrim,v.DataTable.dtWon(V.Args.ROWINDEX).Project!fieldvaltrim,v.Local.ssql)
+			F.ODBC.Connection!con.EXECUTE(V.Local.ssql)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+f.Intrinsic.Control.EndTry
+Program.Sub.gsgcConfirmed_CellValueChanged.End
+Program.Sub.frmForecast_UnLoad.Start
+f.Intrinsic.Control.CallSub(unloadForm)
+Program.Sub.frmForecast_UnLoad.End
+
+Program.Sub.unloadForm.Start
+f.ODBC.Connection!con.Close
+f.Intrinsic.Control.End
+Program.Sub.unloadForm.End
+
+Program.Sub.cmdRefresh_Click.Start
+
+Program.Sub.cmdRefresh_Click.End
