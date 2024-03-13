@@ -1,0 +1,131 @@
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.PrintCore.Start
+F.ODBC.Connection!CONL.opencompanyconnection
+v.Local.ssql.Declare(string)
+v.Local.sDir.Declare(string)
+v.local.sFileName.Declare(string)
+V.Local.sPrms.Declare(string)
+V.Local.sVals.Declare(string)
+v.Local.sProj.Declare(string)
+v.Local.sRefr.Declare(string)
+v.Local.sAttn.Declare(string)
+v.Local.sCont.Declare(string)
+v.Local.sTrac.Declare(string)
+v.Local.sCode.Declare(string)
+v.Local.sSite.Declare(string)
+v.Local.sDesc.Declare(string)
+v.Local.sPhse.Declare(string)
+v.Local.sUser.Declare(string)
+v.Local.sCust.Declare(string)
+v.Local.sEmai.Declare(string)
+v.Local.sTaxZ.Declare(string)
+v.Local.sTaxA.Declare(string)
+v.Local.fRate.Declare(float)
+v.Local.fValu.Declare(float)
+v.Local.fPrvC.Declare(float)
+v.Local.fRetn.Declare(float)
+v.Local.fPrvR.Declare(float)
+V.Local.fTaxP.Declare(float)
+v.Local.fTax.Declare(float)
+v.Local.iPosi.Declare(long)
+v.Local.iClmn.Declare(long)
+V.Local.lBIID.Declare(Long)
+V.Local.bDir.Declare(Boolean)
+V.LOCAL.i.Declare(long)
+'Clear table first
+f.ODBC.connection!ConL.execute("DELETE FROM GAB_5270_CLAIM_PRINT")
+f.Intrinsic.Control.If(v.DataTable.dtDtl.Exists)
+	f.Data.DataTable.Close("dtDtl")
+f.Intrinsic.Control.EndIf
+
+'Now loop through and get values
+f.Intrinsic.String.build("SELECT * FROM GAB_5270_CLAIMH tbH LEFT OUTER JOIN GAB_5270_CLAIML tbL ON tbH.PROJECT=tbL.PROJECT AND tbH.CLAIMNO=tbL.CLAIMNO WHERE tbH.PROJECT='{0}' AND tbL.CLAIMNO='{1}'",v.Args.sProject,v.Args.sClaimNo,v.Local.ssql)
+f.Data.DataTable.CreateFromSQL("dtDtl","ConL",v.Local.ssql,true)
+f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dtDtl.RowCount--,1)
+	v.Local.sProj.Set(v.DataTable.dtDtl(v.Local.i).PROJECT!FIELDVALTRIM)
+	v.Local.sRefr.Set(v.DataTable.dtDtl(v.Local.i).REFERENCE_ID!FIELDVALTRIM)
+	v.Local.sAttn.Set(v.DataTable.dtDtl(v.Local.i).ATTENTION!FIELDVALTRIM)
+	v.Local.sCont.Set(v.DataTable.dtDtl(v.Local.i).CONTACT!FIELDVALTRIM)
+	v.Local.sTrac.Set(v.DataTable.dtDtl(v.Local.i).CONTRACT_ID!FIELDVALTRIM)
+	v.Local.sCode.Set(v.DataTable.dtDtl(v.Local.i).SCHEDULE_CODE!FIELDVALTRIM)
+	v.Local.sSite.Set(v.DataTable.dtDtl(v.Local.i).SITE_INSTRUCTION!FIELDVALTRIM)
+	v.Local.sDesc.Set(v.DataTable.dtDtl(v.Local.i).DESCRIPTION!FIELDVALTRIM)
+	v.Local.fRate.Set(v.DataTable.dtDtl(v.Local.i).SCHEDULE_RATE!FIELDVALTRIM)
+	v.Local.fValu.Set(v.DataTable.dtDtl(v.Local.i).VALUE_CLAIM!FIELDVAL)
+	v.Local.sPhse.Set(v.DataTable.dtDtl(v.Local.i).PHASE!FIELDVAL)
+	v.Local.iPosi.Set(v.DataTable.dtDtl(v.Local.i).POSITION!FIELDVAL)
+	v.Local.iClmn.Set(v.DataTable.dtDtl(v.Local.i).CLAIMNO!FIELDVALTRIM)
+	v.Local.sUser.Set(v.Caller.User)
+	'Get Customer
+	f.Intrinsic.string.Build("SELECT CUSTOMER FROM V_PROJECT_MASTER WHERE PROJECT='{0}'",v.Args.sProject,v.Local.ssql)
+	f.ODBC.Connection!ConL.executeandreturn(v.Local.ssql,v.Local.sCust)
+	'Get Email
+	f.Intrinsic.String.Build("SELECT EMAIL1 FROM V_CONTACT WHERE CUST='{0}' AND ucase(NAME)='{1}'",v.Local.sCust,v.Local.sCont.UCase,v.Local.ssql)
+	f.ODBC.Connection!CONL.executeandreturn(v.Local.ssql,v.Local.sEmai)
+	'Get Tax Zone
+	f.Intrinsic.String.Build("SELECT TAX_ZONE FROM V_CUSTOMER_TAX_AUTH WHERE CUST='{0}'",v.Local.sCust,v.Local.ssql)
+	f.ODBC.Connection!CONL.executeandreturn(v.Local.ssql,v.Local.sTaxZ)
+	'Get Tax Auth
+	f.Intrinsic.String.Build("SELECT TAX_AUTH FROM V_CUSTOMER_TAX_AUTH WHERE CUST='{0}'",v.Local.sCust,v.Local.ssql)
+	f.ODBC.Connection!CONL.executeandreturn(v.Local.ssql,v.Local.sTaxA)
+	'Get Tax Percent
+	f.Intrinsic.String.Build("SELECT RATE FROM V_AR_TAX_TABLES WHERE ZONE='{0}' AND AUTH='{1}'",v.Local.sTaxZ,v.Local.sTaxA,v.Local.ssql)
+	f.ODBC.Connection!CONL.executeandreturn(v.Local.ssql,v.Local.fTaxP)
+	'Get Previous Claim
+	f.Intrinsic.String.Build("SELECT SUM(VALUE_CLAIM) as 'TotalClaim' FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND PHASE='{1}' AND CLAIMNO < {2}",v.Args.sProject,v.local.sPhse,v.Args.sClaimNo,v.Local.ssql)
+	f.ODBC.Connection!ConL.executeandreturn(v.Local.ssql,v.Local.fPrvC)
+	'Get Previous Retention
+	f.Intrinsic.String.Build("SELECT SUM(VALUE_CLAIM) as 'TotalClaim' FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND CLAIMNO < {1} AND SCHEDULE_CODE='RETENTION'",v.Args.sProject,v.Args.sClaimNo,v.Local.ssql)
+	f.ODBC.Connection!ConL.executeandreturn(v.Local.ssql,v.Local.fPrvR)
+	'Get Current Retention
+	f.Intrinsic.String.Build("SELECT SUM(VALUE_CLAIM) as 'TotalClaim' FROM GAB_5270_CLAIML WHERE PROJECT='{0}' AND CLAIMNO = {1} AND SCHEDULE_CODE='RETENTION'",v.Args.sProject,v.Args.sClaimNo,v.Local.ssql)
+	f.ODBC.Connection!ConL.executeandreturn(v.Local.ssql,v.Local.fRetn)
+	F.Intrinsic.Control.If(V.Local.sCode.Trim,=,"RETENTION")
+		'Insert Values
+		v.Local.ssql.Set("INSERT INTO GAB_5270_CLAIM_PRINT VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')")
+		F.Intrinsic.String.Build(V.Local.ssql,v.Local.sProj,v.Local.iClmn,v.Local.sRefr,v.Local.sAttn,v.Local.sCont,v.Local.sTrac,v.Local.sCode,v.Local.sSite,v.Local.sDesc,v.Local.fRate,v.Local.fValu,v.Local.sPhse,v.Local.iPosi,0,v.Local.fRetn,v.Local.fPrvR,v.local.sUser,v.Local.sCust,v.Local.ssql)
+		f.ODBC.Connection!ConL.execute(v.Local.ssql)
+	F.Intrinsic.Control.Else
+		'Insert Values
+		v.Local.ssql.Set("INSERT INTO GAB_5270_CLAIM_PRINT VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}','{16}','{17}')")
+		F.Intrinsic.String.Build(V.Local.ssql,v.Local.sProj,v.Local.iClmn,v.Local.sRefr,v.Local.sAttn,v.Local.sCont,v.Local.sTrac,v.Local.sCode,v.Local.sSite,v.Local.sDesc,v.Local.fRate,v.Local.fValu,v.Local.sPhse,v.Local.iPosi,v.Local.fPrvC,v.Local.fRetn,v.Local.fPrvR,v.local.sUser,v.Local.sCust,v.Local.ssql)
+		f.ODBC.Connection!ConL.execute(v.Local.ssql)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.i)
+F.ODBC.Connection!CONL.Close
+
+'Get Report ID
+F.Global.BI.GetIDFromName("GAB_5270_CLAIM_A4.rpt",V.Local.lBIID)
+f.Intrinsic.String.Concat("Project-!-ClaimNo-!-Tax","",v.Local.sPrms)
+f.Intrinsic.String.Concat(v.Args.sProject,"-!-",v.Args.sClaimno,"-!-",v.Local.fTaxP,v.Local.svals)
+F.Intrinsic.String.Split(V.Local.sVals,"-!-",V.Local.sVals)
+F.Intrinsic.String.Split(V.Local.sPrms,"-!-",V.Local.sPrms)
+'Print Report
+F.Intrinsic.Control.If(V.args.sFlag,=,"P")
+	F.Global.BI.PrintReport(V.Local.lBIID,0,V.local.sPrms,V.local.sVals,,True)
+'Email Report
+f.Intrinsic.Control.ElseIf(v.Args.sFlag,=,"E")
+	'Check if directory exists
+	f.Intrinsic.String.Concat(v.Caller.PluginsDir,"\Claims\",v.Local.sDir)
+	f.Intrinsic.File.DirExists(v.Local.sDir,v.Local.bDir)
+	f.Intrinsic.Control.If(v.Local.bDir,=,"False")
+		f.Intrinsic.File.CreateDir(v.Local.sDir)
+	f.Intrinsic.Control.EndIf
+	'Create the Claim PDF on the directory
+	f.Intrinsic.String.Concat(v.Caller.PluginsDir,"\Claims\",v.Args.sProject," Claim-",v.Args.sClaimNo,".pdf",v.Local.sFileName)
+	f.Global.BI.SaveReport(V.Local.LBIID,1,v.Local.sPrms,v.Local.sVals,v.Local.sFileName)
+	'Create the email in outlook
+	f.Intrinsic.Control.If(v.Local.sEmai.Trim,=,"")
+		F.Automation.MSOutlook.ComposeEmail("EMAIL@NOTONFILE.CO.NZ"," "," ",V.Local.sFileName)
+	f.Intrinsic.Control.Else
+		F.Automation.MSOutlook.ComposeEmail(v.Local.sEmai," "," ",V.Local.sFileName)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.EndIf
+Program.Sub.PrintCore.End
+
+Program.Sub.Comments.Start
+${$5$}$2.0.0.0$}$2
+${$6$}$Ryan$}$20201016172426457$}$zT7b+sV1eISPUtInNavz/hSFWiol/4DuywBjag0Gz9fwO2evGhkwEU+4vAj/CVhBhM36ySgrqBo=
+Program.Sub.Comments.End
