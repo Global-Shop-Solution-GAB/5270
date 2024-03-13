@@ -1,0 +1,248 @@
+Program.Sub.ScreenSU.Start
+Gui.frmRetentions..Create
+Gui.frmRetentions..Caption("Retentions")
+Gui.frmRetentions..Size(15375,7185)
+Gui.frmRetentions..MinX(0)
+Gui.frmRetentions..MinY(0)
+Gui.frmRetentions..Position(0,0)
+Gui.frmRetentions..BackColor(-2147483633)
+Gui.frmRetentions..MousePointer(0)
+Gui.frmRetentions..Event(UnLoad,frmRetentions_UnLoad)
+Gui.frmRetentions.gsgcRetentions.Create(GsGridControl)
+Gui.frmRetentions.gsgcRetentions.Size(15045,5790)
+Gui.frmRetentions.gsgcRetentions.Position(60,90)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.frmRetentions_UnLoad.Start
+F.ODBC.Connection!CON.Close
+F.Intrinsic.Control.End
+Program.Sub.frmRetentions_UnLoad.End
+
+Program.Sub.Main.Start
+F.ODBC.Connection!CON.opencompanyconnection
+f.Intrinsic.Control.CallSub(loadRetn)
+f.Intrinsic.Control.CallSub(setProperties)
+F.Intrinsic.Control.CallSub(setContextMenus)
+gui.frmRetentions..Show
+Program.Sub.Main.End
+
+Program.Sub.setProperties.Start
+gui.frmRetentions.gsgcRetentions.DataSource("dt")
+gui.frmRetentions.gsgcRetentions.AddGridviewFromDatatable("gv","dt")
+gui.frmRetentions.gsgcRetentions.SetGridviewProperty("gv","ReadOnly","True")
+gui.frmRetentions.gsgcRetentions.SetGridviewProperty("gv","Editable","False")
+gui.frmRetentions.gsgcRetentions.SetGridviewProperty("gv","Enableappearanceoddrow","True")
+
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","PROJECT_NUMBER","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjName","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","CustName","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjInit","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjVari","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjNetV","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjClam","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjPaid","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjUPad","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjRetn","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjComp","HeaderFontBold",True)
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjDeft","HeaderFontBold",True)
+
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","PROJECT_NUMBER","Caption","Project")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjName","Caption","Project Name")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","CustName","Caption","Customer Name")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjInit","Caption","Initial Value")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjVari","Caption","Variations")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjNetV","Caption","Net Value")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjClam","Caption","Claimed to Date")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjPaid","Caption","Paid to Date")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjUPad","Caption","Unpaid")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjRetn","Caption","Retentions")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjComp","Caption","Compl. Date")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjDeft","Caption","Defect Liab.")
+
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjInit","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjVari","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjNetV","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjClam","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjPaid","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjUPad","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjRetn","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","ProjComp","DisplayCustomDatetime","d")
+gui.frmRetentions.gsgcRetentions.SetColumnProperty("gv","rtRetn","Visible","False")
+
+
+gui.frmRetentions.gsgcRetentions.anchor(15)
+Program.Sub.setProperties.End
+
+Program.Sub.loadRetn.Start
+v.Local.ssql.Declare(string)
+v.Local.sCustNumb.Declare(string)
+v.Local.sCustName.Declare(string)
+v.Local.sProjName.Declare(string)
+v.Local.sProjDeft.Declare(string)
+V.Local.fProjInit.Declare(Float)
+V.Local.fProjVari.Declare(Float)
+V.Local.fProjNetV.Declare(Float)
+V.Local.fProjClam.Declare(Float)
+v.Local.fProjRetn.Declare(Float)
+v.Local.fProjPaid.Declare(float)
+v.Local.fprojUPad.Declare(float)
+v.Local.fAmt.Declare(float)
+V.Local.dProjComp.Declare(Date)
+v.Local.i.Declare(long)
+v.Local.j.Declare(long)
+f.Intrinsic.Control.If(v.DataTable.dt.Exists)
+	f.Data.DataTable.Close("dt")
+f.Intrinsic.Control.EndIf
+
+F.Data.DataTable.CreateFromSQL("dt","con","SELECT PROJECT_NUMBER FROM GAB_5270_PROJ_SET",true)
+f.Data.DataTable.AddColumn("dt","ProjName","string")
+f.Data.DataTable.AddColumn("dt","CustName","string")
+f.Data.DataTable.AddColumn("dt","ProjInit","float")
+f.Data.DataTable.AddColumn("dt","ProjVari","float")
+f.Data.DataTable.AddColumn("dt","ProjNetV","float")
+f.Data.DataTable.AddColumn("dt","ProjClam","float")
+f.Data.DataTable.AddColumn("dt","ProjPaid","float")
+f.Data.DataTable.AddColumn("dt","ProjUPad","float")
+f.Data.DataTable.AddColumn("dt","ProjRetn","float")
+f.Data.DataTable.AddColumn("dt","ProjComp","date")
+f.Data.DataTable.AddColumn("dt","ProjDeft","string")
+f.Data.DataTable.AddColumn("dt","rtRetn","float")
+
+f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dt.RowCount--,1)
+	'Get Project Name
+	f.Intrinsic.String.build("SELECT DESCR FROM V_PROJECT_MASTER WHERE PROJECT='{0}'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.sProjName)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjName",v.Local.sProjName)
+	
+	'Get Customer Name
+	f.Intrinsic.String.build("SELECT CUSTOMER FROM V_PROJECT_MASTER WHERE PROJECT='{0}'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.sCustNumb)
+	
+	'Get Customer Name
+	f.Intrinsic.String.build("SELECT NAME_CUSTOMER FROM V_CUSTOMER_MASTER WHERE CUSTOMER='{0}'",V.Local.sCustNumb,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.sCustName)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"CustName",v.Local.sCustName)
+	
+	'Get Project Main Contract
+	f.Intrinsic.String.Build("SELECT IFNULL(ROUND(SUM(CAST(USER_3 as double)),2),0) as 'SCHEDULE_RATE' FROM V_PROJECT_PHASE WHERE PROJECT='{0}' AND RTRIM(USER_1)='MAIN CONTRACT' AND PHASE<>'SALE' AND PHASE<>'RETN'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.fProjInit)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjInit",v.Local.fProjInit)
+		
+	'Get Project Variations Contract
+	f.Intrinsic.String.Build("SELECT IFNULL(ROUND(SUM(CAST(USER_3 as double)),2),0) as 'SCHEDULE_RATE' FROM V_PROJECT_PHASE WHERE PROJECT='{0}' AND (RTRIM(USER_1)='ADDITIONS' OR RTRIM(USER_1)='DEDUCTIONS') AND PHASE<>'SALE' AND PHASE<>'RETN'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.fProjVari)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjVari",v.Local.fProjVari)
+	
+	'Get Net Value
+	f.Intrinsic.Math.Add(v.Local.fProjVari,v.Local.fProjInit,v.Local.fProjNetV)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjNetV",v.Local.fProjNetV)
+	
+	'Get Claim to Date
+	f.Intrinsic.String.Build("select SUM(VALUE_CLAIM) from GAB_5270_CLAIML WHERE PROJECT='{0}' AND SCHEDULE_CODE<>'RETENTION'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.fProjClam)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjClam",v.Local.fProjClam)
+	
+	'Get Paid to Date
+	f.Intrinsic.String.build("SELECT INVOICE FROM GAB_5270_CLAIMH WHERE PROJECT='{0}'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.Intrinsic.Control.If(v.DataTable.dtInv.Exists)
+		f.Data.DataTable.Close("dtInv")
+	f.Intrinsic.Control.EndIf
+	f.Data.DataTable.CreateFromSQL("dtInv","con",v.Local.ssql,true)
+	f.Intrinsic.Control.For(v.Local.j,0,v.DataTable.dtInv.RowCount--,1)
+		f.Intrinsic.String.Build("select ifnull(SUM(AMT_INVOICE),0) from V_AR_OPEN_ITEMS WHERE BATCH_CODE='11' AND INVOICE='{0}'",v.DataTable.dtInv(v.Local.j).INVOICE!FIELDVALTRIM,v.Local.ssql)
+		f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.fAmt)
+		f.Intrinsic.Math.Add(v.Local.fProjPaid,v.Local.famt,v.Local.fProjPaid)
+	f.Intrinsic.Control.Next(v.Local.j)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjPaid",v.Local.fProjPaid)
+	
+	'Get Unpaid
+	f.Intrinsic.Math.Add(v.Local.fProjClam,v.Local.fProjPaid,v.Local.fprojUPad)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjUPad",v.Local.fprojUPad)
+	
+	'Get Retention to Date
+	f.Intrinsic.String.Build("select SUM(VALUE_CLAIM) from GAB_5270_CLAIML WHERE PROJECT='{0}' AND SCHEDULE_CODE='RETENTION'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.fProjRetn)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjRetn",v.Local.fProjRetn)
+	
+	'Get Practical Completion Date
+	f.Intrinsic.String.Build("select IFNULL(PRACTICAL_COMPL_DT,'1900-01-01') from GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.dProjComp)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjComp",v.Local.dProjComp)
+	
+	'Get Defect Liability
+	f.Intrinsic.String.Build("select DEFECT_LIABILITY from GAB_5270_PROJ_SET WHERE PROJECT_NUMBER='{0}'",v.DataTable.dt(v.Local.i).PROJECT_NUMBER!FIELDVALTRIM,v.Local.ssql)
+	f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.sProjDeft)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"ProjDeft",v.Local.sProjDeft.Trim)
+	F.Data.DataTable.RunningTotal("dt","ProjRetn",0,"+","rtRetn")
+	v.Local.fProjPaid.Set(0)
+f.Intrinsic.Control.Next(v.Local.i)
+'f.Data.DataTable.AddRow("dt","ProjName","Total Retention:","ProjRetn",v.DataTable.dt(v.DataTable.dt.RowCount--).rtRetn!fieldvalfloat)
+Program.Sub.loadRetn.End
+
+Program.Sub.setContextMenus.Start
+Gui.frmRetentions..ContextMenuCreate("ctxAll")
+Gui.frmRetentions.gsgcRetentions.ContextMenuAttach("ctxAll")
+Gui.frmRetentions..ContextMenuAddItem("ctxAll","Refresh",0,"Refresh")
+Gui.frmRetentions..ContextMenuAddItem("ctxAll","Export",0,"Export")		
+Gui.frmRetentions..ContextMenuSetItemEventHandler("ctxAll","Refresh","MenuClickRefresh")
+Gui.frmRetentions..ContextMenuSetItemEventHandler("ctxAll","Export","MenuClickExport")
+Program.Sub.setContextMenus.End
+
+Program.Sub.MenuClickRefresh.Start
+F.Intrinsic.Control.Try
+	v.Local.sError.Declare(string)
+	GUI.frmRetentions..Visible(False)
+	f.Intrinsic.Control.CallSub(loadRetn)
+	f.Intrinsic.Control.CallSub(setProperties)
+	GUI.frmRetentions..Visible(True)
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	f.Intrinsic.Control.CallSub(frmRetentions_UnLoad)
+F.Intrinsic.Control.EndTry
+Program.Sub.MenuClickRefresh.End
+
+Program.Sub.MenuClickExport.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare
+	
+	V.Local.sFileExport.Declare
+	V.Local.bExcel.Declare
+	V.Local.bFileLocked.Declare
+	V.Local.sMsg.Declare
+	V.Local.sControl.Declare
+	
+	V.Local.sControl.Set("gsgcRetentions")
+
+	F.Automation.MSExcel.CheckPresence(V.Local.bExcel)
+	F.Intrinsic.Control.If(V.Local.bExcel)
+		F.Intrinsic.String.Build("{0}\GAB_5270_RETN_{1}_Export.xlsx",V.Caller.LocalGssTempDir,V.Local.sControl,V.Local.sFileExport)
+		F.Intrinsic.File.IsFileLocked(V.Local.sFileExport,V.Local.bFileLocked)
+		F.Intrinsic.Control.If(V.Local.bFileLocked)
+			F.Intrinsic.String.Build("File is already open. Please close and export again.{0}File: {1}",V.Ambient.NewLine,V.Local.sFileExport,V.Local.sMsg)
+			F.Intrinsic.UI.Msgbox(V.Local.sMsg,"File In Use")
+		F.Intrinsic.Control.Else
+			Gui.frmRetentions.[V.Local.sControl].Export(V.Local.sFileExport,"xlsx")
+			F.Intrinsic.Task.ShellExec(0,"",V.Local.sFileExport,"","",1)
+		F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("{0}\GAB_5270_RETN_{1}_Export.csv",V.Caller.LocalGssTempDir,V.Local.sControl,V.Local.sFileExport)
+		F.Intrinsic.File.IsFileLocked(V.Local.sFileExport,V.Local.bFileLocked)
+		F.Intrinsic.Control.If(V.Local.bFileLocked)
+			F.Intrinsic.String.Build("File is already open. Please close and export again.{0}File: {1}",V.Ambient.NewLine,V.Local.sFileExport,V.Local.sMsg)
+			F.Intrinsic.UI.Msgbox(V.Local.sMsg,"File In Use")
+		F.Intrinsic.Control.Else
+			Gui.frmRetentions.[V.Local.sControl].Export(V.Local.sFileExport,"csv")
+		F.Intrinsic.Control.EndIf
+		F.Intrinsic.Task.ShellExec(0,"",V.Local.sFileExport,"","",1)
+	F.Intrinsic.Control.EndIf
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	f.Intrinsic.Control.CallSub(frmRetentions_UnLoad)
+F.Intrinsic.Control.EndTry
+Program.Sub.MenuClickExport.End
