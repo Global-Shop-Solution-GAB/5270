@@ -1,0 +1,112 @@
+Program.Sub.ScreenSU.Start
+Gui.frmClaimUpload..Create
+Gui.frmClaimUpload..Caption("Claim Upload")
+Gui.frmClaimUpload..Size(5370,5175)
+Gui.frmClaimUpload..MinX(0)
+Gui.frmClaimUpload..MinY(0)
+Gui.frmClaimUpload..Position(0,0)
+Gui.frmClaimUpload..BackColor(-2147483633)
+Gui.frmClaimUpload..MousePointer(0)
+Gui.frmClaimUpload..Event(UnLoad,frmClaimUpload_UnLoad)
+Gui.frmClaimUpload.trvUpload.Create(TreeView)
+Gui.frmClaimUpload.trvUpload.Size(4905,3900)
+Gui.frmClaimUpload.trvUpload.Position(90,630)
+Gui.frmClaimUpload.lbl1.Create(Label,"Drag & Drop File Here:",True,1935,255,0,150,225,True,0,"Arial",8,-2147483633,0)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.frmClaimUpload_UnLoad.Start
+f.ODBC.Connection!CON.Close
+f.Intrinsic.Control.End
+Program.Sub.frmClaimUpload_UnLoad.End
+
+Program.Sub.Main.Start
+F.ODBC.Connection!CON.opencompanyconnection
+gui.frmClaimUpload.trvUpload.event("DRAGDROPFILE",Dragdrop)
+gui.frmClaimUpload..Show
+Program.Sub.Main.End
+
+Program.Sub.DragDrop.Start
+f.Intrinsic.Control.Try
+	v.Local.sFiles.Declare(string)
+	v.Local.sContent.Declare(string)
+	v.Local.sNewContents.Declare(string)
+	v.Local.ssql.Declare(string)
+	v.Local.sret.Declare(string)
+	
+	v.Local.sProj.Declare(string)
+	v.Local.sRefr.Declare(string)
+	v.Local.sLstC.Declare(string)
+	v.Local.sCust.Declare(string)
+	v.Local.sAttn.Declare(string)
+	v.Local.sCntc.Declare(string)
+	v.Local.sTrac.Declare(string)
+	v.Local.sSchd.Declare(string)
+	v.Local.sSite.Declare(string)
+	v.Local.sDesc.Declare(string)
+	v.Local.sPhas.Declare(string)
+	v.Local.sPosi.Declare(string)
+	v.Local.sClmn.Declare(string)
+	
+	v.Local.fRate.Declare(float)
+	v.Local.fValu.Declare(float)
+	
+	v.Local.i.Declare(long)
+	v.Local.j.Declare(long)
+	
+	
+	f.Intrinsic.String.Split(v.Args.Files,"*!*",v.Local.sFiles)
+	f.Intrinsic.UI.InvokeWaitDialog("Processing...")
+	f.Intrinsic.Control.For(v.Local.i,0,v.Local.sFiles.UBound,1)
+		'Check if multiple files
+		f.Intrinsic.Control.If(v.Local.sFiles.UBound,>,0)
+			f.Intrinsic.UI.Msgbox("Multiple files loaded, please upload only one.")
+			f.Intrinsic.UI.CloseWaitDialog
+			f.Intrinsic.Control.CallSub(frmClaimUpload_Unload)
+		f.Intrinsic.Control.EndIf
+		
+		'Open its contents
+		f.Intrinsic.File.File2String(v.Local.sFiles(V.Local.i),v.Local.sContent)
+		f.Intrinsic.String.Split(v.Local.sContent,v.Ambient.NewLine,v.Local.sContent)
+		f.Intrinsic.Control.For(v.Local.j,1,v.Local.sContent.UBound,1)
+			F.Intrinsic.Control.If(v.local.sContent(v.Local.j).trim,<>,"")
+				f.Intrinsic.String.SplitCSV(v.Local.sContent(v.Local.j),v.Local.sNewContents)
+				v.Local.sProj.Set(v.Local.sNewContents(0))
+				v.Local.sRefr.Set(v.Local.sNewContents(1))
+				v.Local.sLstC.Set(v.Local.sNewContents(2))
+				v.Local.sCust.Set(v.local.snewcontents(3))
+				v.Local.sAttn.Set(v.Local.sNewContents(4))
+				v.Local.sCntc.Set(v.Local.sNewContents(5))
+				v.Local.sTrac.Set(v.Local.sNewContents(6))
+				v.Local.sSchd.Set(v.Local.sNewContents(7))
+				v.Local.sSite.Set(v.Local.sNewContents(8))
+				v.Local.sDesc.Set(v.Local.sNewContents(9))
+				v.Local.fRate.Set(v.Local.sNewContents(10))
+				v.Local.fValu.Set(v.Local.sNewContents(11))
+				v.Local.sPhas.Set(v.Local.sNewContents(12))
+				v.Local.sPosi.Set(v.Local.sNewContents(12))
+				
+				'Check if Project exists first
+				f.Intrinsic.String.Build("SELECT * FROM GAB_5270_CLAIMH WHERE PROJECT='{0}' AND CLAIMNO='{1}'",v.Local.sProj,v.Local.sLstC,v.Local.ssql)
+				f.ODBC.Connection!CON.executeandreturn(v.Local.ssql,v.Local.sret)
+				f.Intrinsic.Control.If(v.Local.sret.Trim,=,"")
+					'Continue with inserting claim header
+					f.Intrinsic.String.Build("INSERT INTO GAB_5270_CLAIMH (PROJECT,REFERENCE_ID,CLAIMNO,CLIENT,ATTENTION,CONTACT,CONTRACT_ID) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}')",V.Local.sProj,v.Local.sRefr,v.Local.sLstC,v.Local.sCust,v.Local.sAttn,v.Local.sCntc,v.Local.sTrac,v.Local.ssql)
+					f.ODBC.Connection!CON.execute(v.Local.ssql)
+				f.Intrinsic.Control.EndIf
+				
+				'Insert the values next
+				f.Intrinsic.String.Build("INSERT INTO GAB_5270_CLAIML (PROJECT,SCHEDULE_CODE,SITE_INSTRUCTION,DESCRIPTION,SCHEDULE_RATE,VALUE_CLAIM,PHASE,POSITION,CLAIMNO) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')",v.Local.sProj,V.Local.sSchd,V.Local.sSite,v.Local.sDesc,v.Local.fRate,v.Local.fValu,v.Local.sphas,v.Local.sposi,v.Local.sLstC,v.Local.ssql)
+				f.ODBC.Connection!CON.execute(v.Local.ssql)
+			f.Intrinsic.Control.EndIf
+		f.Intrinsic.Control.Next(v.Local.j)
+	f.Intrinsic.Control.Next(v.Local.i)
+	f.Intrinsic.UI.CloseWaitDialog
+	f.Intrinsic.Control.CallSub(frmClaimUpload_UnLoad)
+f.Intrinsic.Control.Catch
+	f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+	f.Intrinsic.Control.CallSub(frmClaimUpload_Unload)
+f.Intrinsic.Control.EndTry
+Program.Sub.DragDrop.End
