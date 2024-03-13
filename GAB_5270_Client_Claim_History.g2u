@@ -1,0 +1,289 @@
+Program.Sub.ScreenSU.Start
+Gui.frmCC..Create
+Gui.frmCC..Caption("Client Contract")
+Gui.frmCC..Size(15675,8205)
+Gui.frmCC..MinX(0)
+Gui.frmCC..MinY(0)
+Gui.frmCC..Position(0,0)
+Gui.frmCC..BackColor(-2147483633)
+Gui.frmCC..MousePointer(0)
+Gui.frmCC..Event(UnLoad,frmCC_UnLoad)
+Gui.frmCC.gsgcClaims.Create(GsGridControl)
+Gui.frmCC.gsgcClaims.Size(15240,5865)
+Gui.frmCC.gsgcClaims.Position(90,675)
+Gui.frmCC.gsgcClaims.Event(RowCellClick,gsgcClaims_RowCellClick)
+Gui.frmCC.gsgcClaims.Event(CellValueChanged,gsgcClaims_CellValueChanged)
+Gui.frmCC.txtContract.Create(TextBox,"",True,1875,300,0,135,285,True,0,"Arial",8,-2147483643,1)
+Gui.frmCC.cmdBrowse.Create(Button)
+Gui.frmCC.cmdBrowse.Size(855,375)
+Gui.frmCC.cmdBrowse.Position(2190,240)
+Gui.frmCC.cmdBrowse.Caption("^")
+Gui.frmCC.cmdBrowse.Event(Click,cmdBrowse_Click)
+Gui.frmCC.lbl1.Create(Label,"Contract#",True,1935,255,0,120,60,True,0,"Arial",8,-2147483633,0)
+Gui.frmCC.lblCustomer.Create(Label,"",True,2955,255,0,3750,360,True,0,"Arial",8,-2147483633,0)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.ODBC.Connection!CONx.opencompanyconnection
+f.Intrinsic.Control.If(v.Passed.000002.Trim,<>,"")
+	gui.frmCC.txtContract.Text(v.Passed.000002)
+	gui.frmCC.gsgcClaims.visible(false)
+	f.Intrinsic.Control.CallSub(buildTable)
+	gui.frmCC.gsgcClaims.visible(true)
+F.Intrinsic.Control.Else
+	gui.frmCC.gsgcClaims.visible(false)
+f.Intrinsic.Control.EndIf
+gui.frmCC.gsgcClaims.anchor(15)
+GUI.frmCC..Show
+Program.Sub.Main.End
+
+Program.Sub.cmdBrowse_Click.Start
+V.Local.sRet.Declare(String)
+V.Local.sTitles.Declare(String)
+V.Local.iWidths.Declare(String)
+v.Local.sorderNo.Declare(string)
+v.Local.fret1.Declare(float)
+v.Local.fret2.Declare(float)
+v.Local.fResult.Declare(float)
+v.Local.fgst.Declare(float)
+v.Local.i.Declare(long)
+v.Local.sClaimNo.Declare(string)
+
+f.Intrinsic.UI.SetBrowserHotTypeAhead(true)
+
+F.intrinsic.string.split("Contract*!*Description","*!*",V.local.sTitles)
+F.intrinsic.string.split("2000*!*3000","*!*",V.local.iWidths)
+
+V.Local.ssql.Declare(String)
+V.Local.ssql.set("select PROJECT, DESCR FROM V_PROJECT_MASTER")
+
+F.intrinsic.ui.browser("Select a Project Number",conx,v.Local.ssql,V.local.sTitles,V.local.iWidths,V.local.sRet)
+
+F.intrinsic.control.if(V.local.sRet,"=","***CANCEL***")
+F.intrinsic.control.else
+	F.intrinsic.string.split(V.local.sRet,"*!*",V.local.sRet)
+	Gui.frmCC.txtContract.Text(V.Local.sRet(0))
+	gui.frmCC.gsgcClaims.visible(false)
+	F.Intrinsic.Control.CallSub(buildtable)
+	gui.frmCC.gsgcClaims.visible(true)
+F.Intrinsic.Control.endif
+Program.Sub.cmdBrowse_Click.End
+
+Program.Sub.buildTable.Start
+v.Local.SSQL.Declare(STRING)
+v.Local.sClaimNo.Declare(string)
+v.Local.sCustomer.Declare(string)
+v.Local.sTaxCodZ.Declare(string)
+v.Local.sTaxCodA.Declare(string)
+v.Local.fTaxRate.Declare(string)
+v.Local.i.Declare(long)
+v.Local.fret1.Declare(float)
+v.Local.fret2.Declare(float)
+v.Local.fresult.Declare(float)
+v.Local.fgst.Declare(float)
+v.Local.fClaimTotal.Declare(float)
+v.Local.fReceipt.Declare(Float)
+V.Local.stemp.Declare(String)
+v.Local.sProj.Declare(string)
+f.Intrinsic.Control.If(v.DataTable.dt.Exists,=,true)
+	f.Data.DataTable.Close("dt")
+f.Intrinsic.Control.EndIf
+
+v.Local.sProj.Set(V.Screen.frmCC!txtContract.text)
+f.Intrinsic.String.Build("SELECT CUSTOMER FROM V_PROJECT_MASTER WHERE PROJECT='{0}'",v.Local.sProj,v.Local.ssql)
+F.ODBC.Connection!CONX.EXECUTEANDRETURN(v.Local.ssql,v.Local.sClaimNo)
+
+'Get the customer code
+f.Intrinsic.String.Build("SELECT DISTINCT CLIENT FROM GAB_5270_CLAIMH WHERE PROJECT='{0}'",v.Local.sProj,v.Local.ssql)
+F.ODBC.Connection!CONX.EXECUTEANDRETURN(v.Local.ssql,v.Local.sCustomer)
+
+'Get Tax Code Zone
+f.Intrinsic.String.Build("SELECT tax_zone FROM V_CUSTOMER_TAX_AUTH WHERE CUST='{0}'",v.Local.sCustomer.Trim,v.Local.ssql)
+F.ODBC.Connection!CONX.EXECUTEANDRETURN(v.Local.ssql,v.Local.sTaxCodZ)
+
+'Get Tax Code Auth
+f.Intrinsic.String.Build("SELECT tax_auth FROM V_CUSTOMER_TAX_AUTH WHERE CUST='{0}'",v.Local.sCustomer.Trim,v.Local.ssql)
+F.ODBC.Connection!CONX.EXECUTEANDRETURN(v.Local.ssql,v.Local.sTaxCodA)
+
+'Get Tax Rate
+f.Intrinsic.String.Build("SELECT RATE FROM V_AR_TAX_TABLES WHERE ZONE='{0}' AND AUTH='{1}'",v.local.sTaxCodZ.Trim,v.Local.sTaxCodA.Trim,v.Local.ssql)
+F.ODBC.Connection!CONX.EXECUTEANDRETURN(v.Local.ssql,v.Local.fTaxRate)
+
+'Get the other stuff
+v.Local.ssql.Set("SELECT Project, ClaimNo, Invoice, CreateDate FROM GAB_5270_CLAIMH WHERE PROJECT='{0}' ORDER BY CLAIMNO")
+F.Intrinsic.String.Build(v.Local.ssql,v.Local.sProj,v.Local.ssql)
+f.Data.DataTable.CreateFromSQL("dt","conx",v.Local.ssql,true)
+f.Data.DataTable.AddColumn("dt","Claimed","Float")
+f.Data.DataTable.AddColumn("dt","Retentions","Float")
+f.Data.DataTable.AddColumn("dt","NetClaim","Float")
+f.Data.DataTable.AddColumn("dt","GST","Float")
+f.Data.DataTable.AddColumn("dt","ClaimTotal","Float")
+f.Data.DataTable.AddColumn("dt","Receipts","Float")
+
+f.Data.DataTable.AddColumn("dt","rtClaimed","Float")
+f.Data.DataTable.AddColumn("dt","rtRetentions","Float")
+f.Data.DataTable.AddColumn("dt","rtNetClaim","Float")
+f.Data.DataTable.AddColumn("dt","rtGST","Float")
+f.Data.DataTable.AddColumn("dt","rtClaimTotal","Float")
+f.Data.DataTable.AddColumn("dt","rtReceipts","Float")
+
+f.Intrinsic.Control.For(v.Local.i,0,v.DataTable.dt.RowCount--,1)
+	
+	'For Claimed Amount
+	V.Local.ssql.Set("select sum(value_claim) from GAB_5270_CLAIML where Project='{0}' and ClaimNo='{1}' and Schedule_Code<>'RETENTION'")
+	f.Intrinsic.String.Build(v.Local.ssql,v.DataTable.dt(v.Local.i).Project!FIELDVAL,v.DataTable.dt(v.Local.i).ClaimNo!FIELDVAL,v.Local.ssql)
+	f.odbc.Connection!CONX.executeandreturn(v.Local.ssql,v.Local.fret1)
+	F.Data.DataTable.SetValue("dt",v.Local.i,"Claimed",v.Local.fret1)
+	
+	'For Retention Amount
+	V.Local.ssql.Set("select sum(value_claim) from GAB_5270_CLAIML where Project='{0}' and ClaimNo='{1}' and Schedule_Code='RETENTION'")
+	f.Intrinsic.String.Build(v.Local.ssql,v.DataTable.dt(v.Local.i).Project!FIELDVAL,v.DataTable.dt(v.Local.i).ClaimNo!FIELDVAL,V.Local.ssql)
+	f.odbc.Connection!CONX.executeandreturn(v.Local.ssql,v.Local.fret2)
+	F.Data.DataTable.SetValue("dt",v.Local.i,"Retentions",v.Local.fret2)
+	
+	'Difference between Claimed and Retention
+	f.Intrinsic.Math.ADD(v.Local.fret1,v.Local.fret2,v.Local.fResult)
+	F.Data.DataTable.SetValue("dt",v.Local.i,"NetClaim",v.Local.fResult)
+			
+	'Total GST
+	f.Intrinsic.Math.Mult(v.Local.fresult,v.Local.fTaxRate,v.Local.fGst)
+	f.Data.DataTable.SetValue("dt",v.Local.i,"GST",v.Local.fGST)
+'	V.Local.ssql.Set("select sum(TAX_AMT_1) from GAB_5270_CLAIML where Project='{0}' and Claim='{1}'")
+'	f.Intrinsic.String.Build(v.Local.ssql,v.DataTable.dt(v.Local.i).INVOICE!FIELDVAL,V.Local.ssql)
+'	f.odbc.Connection!CONX.executeandreturn(v.Local.ssql,v.Local.fgst)
+'	F.Data.DataTable.SetValue("dt",v.Local.i,"GST",v.Local.fgst)
+	
+	'Net Claim + GST
+	f.Intrinsic.Math.ADD(v.Local.fresult,v.Local.fgst,v.Local.fClaimTotal)
+	F.Data.DataTable.SetValue("dt",v.Local.i,"ClaimTotal",v.Local.fClaimTotal)
+	
+	'Check if any cash received against
+	V.Local.ssql.Set("select ifnull(SUM(AMT_INVOICE),0) from V_AR_OPEN_ITEMS WHERE BATCH_CODE='11' AND INVOICE='{0}'")
+	F.Intrinsic.String.Build(v.Local.ssql,v.DataTable.dt(v.Local.i).INVOICE!FIELDVAL,v.Local.ssql)
+	f.odbc.Connection!CONX.executeandreturn(v.Local.ssql,v.Local.fReceipt)
+	F.Data.DataTable.SetValue("dt",v.Local.i,"Receipts",v.Local.fReceipt)
+f.Intrinsic.Control.Next(v.Local.i)
+
+F.Data.DataTable.RunningTotal("dt","Claimed",0,"+","rtClaimed")
+F.Data.DataTable.RunningTotal("dt","Retentions",0,"+","rtRetentions")
+F.Data.DataTable.RunningTotal("dt","NetClaim",0,"+","rtNetClaim")
+F.Data.DataTable.RunningTotal("dt","GST",0,"+","rtGST")
+F.Data.DataTable.RunningTotal("dt","ClaimTotal",0,"+","rtClaimTotal")
+F.Data.DataTable.RunningTotal("dt","Receipts",0,"+","rtReceipts")
+'f.Data.DataTable.AddRow("dt","ClaimNo","TOTALS:","Invoice","-------","Claimed",v.DataTable.dt(v.DataTable.dt.RowCount--).rtClaimed!FieldVal,"Retentions",v.DataTable.dt(v.DataTable.dt.RowCount--).rtRetentions!FieldVal,"NetClaim",v.DataTable.dt(v.DataTable.dt.RowCount--).rtNetClaim!FieldVal,"GST",v.DataTable.dt(v.DataTable.dt.RowCount--).rtGST!FieldVal,"ClaimTotal",v.DataTable.dt(v.DataTable.dt.RowCount--).rtClaimTotal!FieldVal,"Receipts",v.DataTable.dt(v.DataTable.dt.RowCount--).rtReceipts!FieldVal)
+
+gui.frmCC.gsgcClaims.DataSource("dt")
+gui.frmCC.gsgcClaims.AddGridviewFromDatatable("gv","dt")
+'Visible
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","rtClaimed","Visible",false)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","rtRetentions","Visible",false)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","rtNetClaim","Visible",false)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","rtGST","Visible",false)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","rtClaimTotal","Visible",false)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","rtReceipts","Visible",false)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Invoice","Visible",True)
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Receipts","Visible",True)
+'Ready Only
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Project","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Claimno","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Invoice","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","CreateDate","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Claimed","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Retentions","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","NetClaim","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","GST","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","ClaimTotal","ReadOnly","True")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Receipts","ReadOnly","True")
+'AllowEdit
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Invoice","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Project","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Claimno","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Invoice","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","CreateDate","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Claimed","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Retentions","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","NetClaim","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","GST","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","ClaimTotal","AllowEdit","False")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Receipts","AllowEdit","False")
+
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Claimed","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Retentions","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","NetClaim","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","GST","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","ClaimTotal","DisplayCustomNumeric","$#,###,##0.00")
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","Receipts","DisplayCustomNumeric","$#,###,##0.00")
+
+gui.frmCC.gsgcClaims.SetColumnProperty("gv","CREATEDATE","DisplayCustomDatetime","d")
+
+Program.Sub.buildTable.End
+
+Program.Sub.frmCC_UnLoad.Start
+f.Intrinsic.Control.End
+Program.Sub.frmCC_UnLoad.End
+
+Program.Sub.gsgcClaims_RowCellClick.Start
+v.Local.sinvoice.Declare(string)
+v.Local.sProject.Declare(string)
+v.Local.sClaimNo.Declare(string)
+v.Local.sPath.Declare(string)
+f.Intrinsic.String.Concat(v.Caller.GasDir,"\GAB_5270_NEW_CLAIM.g2u",v.Local.sPath)
+
+F.Intrinsic.Control.SelectCase(V.Args.column)
+	F.Intrinsic.Control.Case("PROJECT")	
+		Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","Project",V.Args.RowIndex,V.Local.sProject)
+		Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","ClaimNo",V.Args.RowIndex,V.Local.sClaimNo)
+		F.Global.General.SetPassedDataElement("Project",V.local.sProject)
+		F.Global.General.SetPassedDataElement("ClaimNo",V.local.sClaimNo)
+		F.Global.General.CallSyncGAS(V.Local.sPath)
+		gui.frmCC.gsgcClaims.visible(false)
+		F.Intrinsic.Control.CallSub(buildtable)
+		gui.frmCC.gsgcClaims.visible(true)
+	F.Intrinsic.Control.Case("CLAIMNO")	
+		Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","Project",V.Args.RowIndex,V.Local.sProject)
+		Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","ClaimNo",V.Args.RowIndex,V.Local.sClaimNo)
+		F.Global.General.SetPassedDataElement("Project",V.local.sProject)
+		F.Global.General.SetPassedDataElement("ClaimNo",V.local.sClaimNo)
+		F.Global.General.CallSyncGAS(V.Local.sPath)
+		gui.frmCC.gsgcClaims.visible(false)
+		F.Intrinsic.Control.CallSub(buildtable)
+		gui.frmCC.gsgcClaims.visible(true)
+	F.Intrinsic.Control.Case("INVOICE")
+		f.Intrinsic.Control.Try
+			Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","Invoice",V.Args.RowIndex,V.Local.sInvoice)
+			f.Global.General.CallWrapperAsync(200900,v.Local.sinvoice)
+		f.Intrinsic.Control.Catch
+			f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+		f.Intrinsic.Control.EndTry
+		f.Intrinsic.UI.CloseWaitDialog
+	F.Intrinsic.Control.EndSelect
+Program.Sub.gsgcClaims_RowCellClick.End
+
+Program.Sub.gsgcClaims_CellValueChanged.Start
+V.Local.sClaimNo.Declare(string)
+V.Local.sInvoice.Declare(string)
+v.Local.SSQL.Declare(String)
+
+F.Intrinsic.Control.SelectCase(V.Args.column)
+	F.Intrinsic.Control.Case("ClaimNo")
+			f.Intrinsic.Control.Try
+				Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","Invoice",V.Args.RowIndex,V.Local.sInvoice)
+				Gui.frmCC.gsgcClaims.GetCellValueByColumnName("gv","ClaimNo",V.Args.RowIndex,V.Local.sClaimNo)
+				F.Intrinsic.String.Build("UPDATE ORDER_HIST_HEAD SET USER_1 = '{0}' WHERE INVOICE = '{1}'",V.Local.sClaimNo,V.Local.sInvoice,V.Local.sSQL)
+				F.ODBC.Connection!conx.Execute(V.Local.sSQL)
+			f.Intrinsic.Control.Catch
+				f.Intrinsic.UI.Msgbox(v.Ambient.ErrorDescription)
+			f.Intrinsic.Control.EndTry
+f.Intrinsic.Control.EndSelect
+Program.Sub.gsgcClaims_CellValueChanged.End
+
+Program.Sub.txtNextClaim_LostFocus.Start
+v.Local.ssql.Declare(string)
+v.Local.ssql.Set("UPDATE ORDER_HEADER SET USER_1='{1}' WHERE ORDER_NO='{0}' AND RECORD_NO='  A '")
+f.Intrinsic.String.Build(v.Local.ssql,v.Screen.frmCC!txtContract.text,v.Screen.frmCC!txtNextClaim.text,v.Local.ssql)
+f.ODBC.Connection!CONX.execute(v.Local.ssql)
+Program.Sub.txtNextClaim_LostFocus.End
+
